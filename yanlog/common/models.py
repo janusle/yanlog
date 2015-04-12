@@ -1,3 +1,11 @@
 from django.db import models
 
-# Create your models here.
+class Page(models.Model):
+	name = models.CharField(max_length=128)
+	link = models.URLField()
+	is_display_on_home = models.BooleanField
+    
+class Setting(models.Model):
+    avatar = models.ImageField()
+    
+
