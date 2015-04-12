@@ -29,6 +29,8 @@ class Base(Configuration):
         'django.contrib.sessions',
         'django.contrib.messages',
         'django.contrib.staticfiles',
+
+        'common',
     )
 
     MIDDLEWARE_CLASSES = (
