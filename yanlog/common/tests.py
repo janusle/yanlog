@@ -1,13 +1,13 @@
 from django.test import TestCase
-from django.test import Client
-from .factories import PageFactory 
+from .factories import PageFactory
 
 class HomeTestCase(TestCase):
 	def setUp(self):
-		self.c = Client()
 		self.page = PageFactory(is_display_on_home=True)
 
-	def testHomePage(self):
-		response = self.c.get("/")
+	def test_home_page(self):
+		response = self.client.get("/")
 		self.assertEqual(response.status_code, 200)
-        self.assertIn(self.page.link, response.content)
+
+		self.assertIn(self.page.link, response.context['links'])
+		self.assertIn(self.page.link, response.content)
