@@ -7,16 +7,17 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
+        ('flatpages', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
             name='Page',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('name', models.CharField(max_length=128)),
-                ('link', models.URLField()),
+                ('flatpage_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='flatpages.FlatPage')),
+                ('is_display_on_home', models.BooleanField(default=False)),
             ],
+            bases=('flatpages.flatpage',),
         ),
         migrations.CreateModel(
             name='Setting',

@@ -7,7 +7,7 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
-        links = Page.objects.filter(is_display_on_home=True).values_list('link',
+        urls = Page.objects.filter(is_display_on_home=True).values_list('url',
                     flat=True)
-        context["links"] = links
+        context["urls"] = urls
         return context

@@ -16,6 +16,7 @@ import os
 
 class Base(Configuration):
 
+    SITE_ID = 1
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     # Quick-start development settings - unsuitable for production
     # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
@@ -29,7 +30,8 @@ class Base(Configuration):
         'django.contrib.sessions',
         'django.contrib.messages',
         'django.contrib.staticfiles',
-
+        'django.contrib.sites',
+        'django.contrib.flatpages',
         'common',
     )
 
@@ -87,7 +89,3 @@ class Dev(Base):
     SECRET_KEY = 'mostm0ux_s!!9pshj0)wpn1#sf+a52kc*t*+jfp6%@088of5!!'
     # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = True
-
-
-
-
