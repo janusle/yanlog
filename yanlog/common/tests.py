@@ -11,9 +11,13 @@ class HomeTestCase(TestCase):
 		self.assertEqual(response.status_code, 200)
 		# Make sure that pages with is_display_on_home equaling to true are
 		# on the home page
-		self.assertIn(self.page.url, response.context['urls'][0])
+		self.assertEqual(self.page.url, response.context['urls'][0])
 		self.assertIn(self.page.url, response.content)
 
 		self.assertEqual(self.setting.github, response.context['github'])
 		self.assertEqual(self.setting.twitter, response.context['twitter'])
 		self.assertEqual(self.setting.linkedin, response.context['linkedin'])
+
+		self.assertIn(self.setting.github, response.content)
+		self.assertIn(self.setting.twitter, response.content)
+		self.assertIn(self.setting.linkedin, response.content)
