@@ -1,9 +1,10 @@
 from django.test import TestCase
-from .factories import PageFactory
+from .factories import PageFactory, SettingFactory
 
 class HomeTestCase(TestCase):
 	def setUp(self):
 		self.page = PageFactory(is_display_on_home=True)
+		self.setting = SettingFactory()
 
 	def test_home_page(self):
 		response = self.client.get("/")
@@ -12,3 +13,7 @@ class HomeTestCase(TestCase):
 		# on the home page
 		self.assertIn(self.page.url, response.context['urls'][0])
 		self.assertIn(self.page.url, response.content)
+
+		self.assertEqual(self.setting.github, response.context['github'])
+		self.assertEqual(self.setting.twitter, response.context['twitter'])
+		self.assertEqual(self.setting.linkedin, response.context['linkedin'])
