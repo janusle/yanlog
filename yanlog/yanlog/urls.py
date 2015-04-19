@@ -9,4 +9,5 @@ urlpatterns = [
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', common_view.HomeView.as_view()),
+    url(r'^blog/', include('blog.urls')),
 ]

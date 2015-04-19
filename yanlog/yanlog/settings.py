@@ -33,6 +33,7 @@ class Base(Configuration):
         'django.contrib.sites',
         'django.contrib.flatpages',
         'common',
+        'blog',
     )
 
     MIDDLEWARE_CLASSES = (
