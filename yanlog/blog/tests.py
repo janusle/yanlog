@@ -9,10 +9,12 @@ class BlogTestCase(TestCase):
         self.category2 = CategoryFactory()
         self.tag1 = TagFactory()
         self.tag2 = TagFactory()
-        self.post1 = PostFactory(tags=(self.tag1,),
+        self.post1 = PostFactory(created_at='2015-01',
+                                 tags=(self.tag1,),
                                  category=self.category1,
                                  lang="en")
-        self.post2 = PostFactory(tags=(self.tag2,),
+        self.post2 = PostFactory(created_at='2014-03',
+                                 tags=(self.tag2,),
                                  category=self.category2,
                                  lang="cn")
 
@@ -38,6 +40,12 @@ class BlogTestCase(TestCase):
         self.assertIn(self.post1.title, response.content)
         self.assertNotIn(self.post2.title, response.content)
 
+    def test_index_with_date_specified(self):
+        response = self.client.get('/blog/2015/1/') 
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(self.post1.title, response.content)
+        self.assertNotIn(self.post2.title, response.content)
+     
     def test_post(self):
         response = self.client.get('/blog/%s/' % self.post1.id)
         self.assertEqual(response.status_code, 200) 

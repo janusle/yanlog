@@ -6,7 +6,7 @@ class Post(models.Model):
     content = models.TextField(blank=True)
     created_at = models.DateField(auto_now_add=True)
     category = models.ForeignKey('Category')
-    tags = models.ManyToManyField('Tag', related_name='posts')
+    tags = models.ManyToManyField('Tag')
 
 
 class Category(models.Model):
