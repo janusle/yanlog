@@ -9,7 +9,15 @@ class IndexView(ListView):
     model = Post
 
     def get_queryset(self):
+        category = self.request.GET.get('category', None) 
+        tag = self.request.GET.get('tag', None) 
+
         queryset = super(IndexView, self).get_queryset()
+        if tag:
+            queryset = Tag.objects.get(name=tag).posts_set().all()
+        if category:
+            queryset = queryset.filter(category__name=category)  
+
         # Only diplay English post in the IndexView
         return queryset.filter(lang='en')
 
