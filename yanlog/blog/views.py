@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
+from django.http import Http404
 
 from .models import Post, Category, Tag
 
@@ -21,3 +22,8 @@ class IndexView(ListView):
             'tags': tags
         })
         return context
+
+
+class PostView(DetailView):
+    model = Post
+    template_name = 'post.html' 

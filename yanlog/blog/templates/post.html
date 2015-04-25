@@ -1,0 +1,8 @@
+{{ post.title }}
+{{ post.content }}
+
+{{ post.category.name }}
+
+{% for tag in post.tags.all %}
+    {{ tag.name }}
+{% endfor %}

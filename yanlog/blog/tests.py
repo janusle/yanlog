@@ -25,3 +25,12 @@ class BlogTestCase(TestCase):
         self.assertIn(self.post1.content, response.content)
         # We only display English post in IndexView
         self.assertNotIn(self.post2.title, response.content)
+
+    def test_post(self):
+        response = self.client.get('/blog/%s/' % self.post1.id)
+        self.assertEqual(response.status_code, 200) 
+        self.assertIn(self.category1.name, response.content)
+        self.assertIn(self.tag1.name, response.content) 
+        self.assertIn(self.tag2.name, response.content) 
+        self.assertIn(self.post1.title, response.content) 
+        self.assertIn(self.post1.content, response.content) 
