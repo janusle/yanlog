@@ -22,6 +22,7 @@ class PostFactory(factory.DjangoModelFactory):
     title = factory.Sequence(lambda n: 'Post%d' % n)
     content = "content"
     category = factory.SubFactory(CategoryFactory)
+    created_at = '2015-04-25' 
 
     @factory.post_generation
     def tags(self, create, extracted, **kwargs):
