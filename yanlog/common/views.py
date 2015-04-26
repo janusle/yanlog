@@ -10,8 +10,9 @@ class HomeView(TemplateView):
         urls = Page.objects.filter(is_display_on_home=True).values_list('url',
                     flat=True)
         context['urls'] = urls
-        setting = Setting.objects.all()[0]
-        context['github'] = setting.github
-        context['twitter'] = setting.twitter
-        context['linkedin'] = setting.linkedin
+        if Setting.objects.count():
+            setting = Setting.objects.all()[0]
+            context['github'] = setting.github
+            context['twitter'] = setting.twitter
+            context['linkedin'] = setting.linkedin
         return context
