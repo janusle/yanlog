@@ -1,4 +1,6 @@
-Home Page
+{% extends 'base.html' %}
+
+{% block main %}
 
 {% for url in urls %}
  {{ url }}
@@ -7,3 +9,5 @@ Home Page
 {{ github }}
 {{ linkedin }}
 {{ twitter }}
+
+{% endblock %}
