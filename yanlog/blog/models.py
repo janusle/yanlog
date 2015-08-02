@@ -7,20 +7,10 @@ class Post(models.Model):
     lang = models.CharField(max_length=2)
     content = models.TextField(blank=True)
     created_at = models.DateField()
-    category = models.ForeignKey('Category')
     tags = models.ManyToManyField('Tag')
 
     def __str__(self):
-        return self.title	
-
-
-@python_2_unicode_compatible
-class Category(models.Model):
-    name = models.CharField(max_length=100)
-
-    def __str__(self):
-    	return self.name
-
+        return self.title
 
 @python_2_unicode_compatible
 class Tag(models.Model):
