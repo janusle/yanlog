@@ -32,6 +32,7 @@ class Base(Configuration):
         'django.contrib.staticfiles',
         'django.contrib.sites',
         'django.contrib.flatpages',
+        'bootstrap3',
         'common',
         'blog',
     )

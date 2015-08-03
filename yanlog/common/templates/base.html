@@ -1,3 +1,5 @@
+{% load bootstrap3 %}
+
 <!DOCTYPE html>
 <!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
 
@@ -7,11 +9,10 @@
   <meta charset="utf-8">
   <!-- If you delete this meta tag World War Z will become a reality -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+  <link href="/static/css/style.css" rel="stylesheet">
   <title>Yanlog</title>
-
-  <!-- If you are using the CSS version, only link these 2 files, you may add app.css to use for your overrides if you like -->
-  <link rel="stylesheet" href="/static/css/normalize.css">
-  <link rel="stylesheet" href="/static/css/foundation.min.css">
 </head>
 
 <body>
