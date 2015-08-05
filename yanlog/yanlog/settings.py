@@ -32,6 +32,7 @@ class Base(Configuration):
         'django.contrib.staticfiles',
         'django.contrib.sites',
         'django.contrib.flatpages',
+        'bootstrap3',
         'common',
         'blog',
     )
@@ -84,7 +85,9 @@ class Base(Configuration):
     # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
     STATIC_URL = '/static/'
-
+    STATICFILES_DIRS =  (
+        os.path.join(BASE_DIR, "static"),
+    )
 
 class Dev(Base):
     SECRET_KEY = 'mostm0ux_s!!9pshj0)wpn1#sf+a52kc*t*+jfp6%@088of5!!'

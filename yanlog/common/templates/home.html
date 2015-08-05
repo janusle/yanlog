@@ -1,9 +1,32 @@
-Home Page
+{% extends 'base.html' %}
+
+{% block main %}
 
 {% for url in urls %}
  {{ url }}
 {% endfor %}
 
-{{ github }}
-{{ linkedin }}
-{{ twitter }}
+{% load staticfiles %}
+<div class="row">
+   <div class="small-2 small-centered columns">
+      <img src="{% static 'images/avatar.jpg' %}"></img>
+   </div>
+</div>
+
+<div class="row">
+   <div class="small-5 small-centered columns">
+      <div class="small-4 columns">
+         <img src="{% static 'images/github.png' %}">{{ github }}</img>
+      </div>
+
+      <div class="small-4 columns">
+         <img src="{% static 'images/linkedin.png' %}">{{ linkedin }}</img>
+      </div>
+
+      <div class="small-4 columns">
+         <img src="{% static 'images/twitter.png' %}">{{ twitter }}</img>
+      </div>
+   </div>
+</div>
+
+{% endblock %}

@@ -1,6 +1,6 @@
 Django==1.8
-
+django-bootstrap3==6.1.0
 #django-configurations==0.8
 git+https://github.com/bsvetchine/django-configurations.git@f514eac8afd971b9e94782c20693c59c3b46275a
-Pillow==2.8.1
 factory-boy==2.5.1
+Pillow==2.8.1
