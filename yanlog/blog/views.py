@@ -40,6 +40,10 @@ class IndexView(ListView):
         return context
 
 
+class AdminView(IndexView):
+    template_name = 'admin.html'
+
+
 class PostView(DetailView):
     model = Post
     template_name = 'post.html'

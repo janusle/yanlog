@@ -1,5 +1,7 @@
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
+
 
 @python_2_unicode_compatible
 class Post(models.Model):
@@ -8,6 +10,9 @@ class Post(models.Model):
     content = models.TextField(blank=True)
     created_at = models.DateField()
     tags = models.ManyToManyField('Tag')
+
+    def get_absolute_url(self):
+        return reverse('blog:post', kwargs={'pk': str(self.id)})
 
     def __str__(self):
         return self.title
