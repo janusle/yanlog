@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^$', IndexView.as_view()),
     url(r'^blog/', include('blog.urls')),
     url(r'^common/', include('common.urls')),
+    url(r'^accounts/', include('accounts.urls')),
 ]
