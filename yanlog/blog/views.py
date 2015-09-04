@@ -2,6 +2,9 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from django.http import Http404
 
+from common.mixin import CommonLoginRequiredMixin
+
+
 from .models import Post, Tag
 
 class IndexView(ListView):
@@ -40,10 +43,10 @@ class IndexView(ListView):
         return context
 
 
-class AdminView(IndexView):
+class AdminView(CommonLoginRequiredMixin, IndexView):
     template_name = 'admin.html'
 
 
-class PostView(DetailView):
+class PostView(CommonLoginRequiredMixin, DetailView):
     model = Post
     template_name = 'post.html'
