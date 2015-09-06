@@ -1,4 +1,4 @@
-{% load bootstrap3 %}
+
 
 <!DOCTYPE html>
 <!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
@@ -9,6 +9,8 @@
   <meta charset="utf-8">
   <!-- If you delete this meta tag World War Z will become a reality -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% load bootstrap3 %}
+  {% load staticfiles %}
   {% bootstrap_css %}
   {% bootstrap_javascript %}
   <link href="/static/css/style.css" rel="stylesheet">
@@ -16,6 +18,15 @@
 </head>
 
 <body>
+
+  <nav class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Yan Le's blog</a>
+      </div>
+    </div>
+  </nav> <!--header-->
+
 {% block main %}{% endblock %}
 </body>
 

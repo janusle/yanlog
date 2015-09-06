@@ -1,8 +1,35 @@
-{{ post.title }}
-{{ post.content }}
+{% extends 'base.html' %}
 
-{{ post.category.name }}
+{% load bootstrap3 %}
+{% load staticfiles %}
 
-{% for tag in post.tags.all %}
-    {{ tag.name }}
-{% endfor %}
+{% block main %}
+
+<div class="container">
+
+<form method="post">
+  {% csrf_token %}
+  {% bootstrap_form form %}
+  <input type="submit" value="Update" />
+</form>
+
+
+<script src="{% static 'js/epiceditor.min.js' %}"></script>
+<script>
+  var opts = {
+    container: 'textarea',
+    basePath: '',
+    theme: {
+      base: '{% static "css/epiceditor/themes/base/epiceditor.css" %}',
+      preview: '{% static "css/epiceditor/themes/preview/preview-dark.css" %}',
+      editor: '{% static "css/epiceditor/themes/editor/epic-dark.css" %}'
+    },
+
+
+  }
+  var editor = new EpicEditor(opts).load();
+</script>
+
+</div>
+
+{% endblock %}

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, UpdateView
 from django.http import Http404
 
 from common.mixin import CommonLoginRequiredMixin
@@ -47,6 +47,7 @@ class AdminView(CommonLoginRequiredMixin, IndexView):
     template_name = 'admin.html'
 
 
-class PostView(CommonLoginRequiredMixin, DetailView):
+class PostView(CommonLoginRequiredMixin, UpdateView):
     model = Post
+    fields = ['title', 'content', 'tags']
     template_name = 'post.html'
