@@ -17,15 +17,14 @@
 <script src="{% static 'js/epiceditor.min.js' %}"></script>
 <script>
   var opts = {
-    container: 'textarea',
+    container: 'content_editor',
+    textarea: 'id_content',
     basePath: '',
     theme: {
       base: '{% static "css/epiceditor/themes/base/epiceditor.css" %}',
       preview: '{% static "css/epiceditor/themes/preview/preview-dark.css" %}',
       editor: '{% static "css/epiceditor/themes/editor/epic-dark.css" %}'
     },
-
-
   }
   var editor = new EpicEditor(opts).load();
 </script>

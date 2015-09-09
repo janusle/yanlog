@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, UpdateView
 from django.http import Http404
+from django import forms
 
 from common.mixin import CommonLoginRequiredMixin
-
-
+from .utils import MarkdownTextAreaWidget
 from .models import Post, Tag
 
 class IndexView(ListView):
@@ -51,3 +51,8 @@ class PostView(CommonLoginRequiredMixin, UpdateView):
     model = Post
     fields = ['title', 'content', 'tags']
     template_name = 'post.html'
+
+    def get_form(self, form_class=None):
+        form = super(PostView, self).get_form(form_class)
+        form.fields['content'] = forms.fields.CharField(widget=MarkdownTextAreaWidget)
+        return form
