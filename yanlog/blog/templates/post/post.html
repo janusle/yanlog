@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% load bootstrap3 %}
+{% load staticfiles %}
+
+{% block main %}
+
+<div class="container">
+    {{ object.title }}
+
+    {{ object.content }}
+
+    {% for tag in object.tags.all %}
+        {{ tag }}
+    {% endfor %}
+</div>
+
+
+{% endblock %}

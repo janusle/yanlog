@@ -10,7 +10,7 @@
 <form method="post">
   {% csrf_token %}
   {% bootstrap_form form %}
-  <input type="submit" value="Update" />
+  <input type="submit" value="{{ action }}" />
 </form>
 
 
@@ -25,6 +25,7 @@
       preview: '{% static "css/epiceditor/themes/preview/preview-dark.css" %}',
       editor: '{% static "css/epiceditor/themes/editor/epic-dark.css" %}'
     },
+    clientSideStorage: false
   }
   var editor = new EpicEditor(opts).load();
 </script>
