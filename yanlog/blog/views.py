@@ -9,7 +9,6 @@ from common.mixin import CommonLoginRequiredMixin
 from .utils import MarkdownTextAreaWidget
 from .models import Post, Tag
 
-
 class IndexView(ListView):
     template_name = "index.html"
     model = Post
@@ -42,7 +41,7 @@ class IndexView(ListView):
         context.update({
             'tags': tags
         })
-        
+
         return context
 
 

@@ -2,13 +2,14 @@
 
 {% load bootstrap3 %}
 {% load staticfiles %}
+{% load parse_markdown %}
 
 {% block main %}
 
 <div class="container">
     {{ object.title }}
 
-    {{ object.content }}
+    {{ object.content | md }}
 
     {% for tag in object.tags.all %}
         {{ tag }}
