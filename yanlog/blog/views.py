@@ -1,49 +1,87 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.views.generic import (ListView, DetailView,
+                                  UpdateView, CreateView, DeleteView)
 from django.http import Http404
+from django import forms
+from django.core.urlresolvers import reverse_lazy
 
-from .models import Post, Category, Tag
+from common.mixin import CommonLoginRequiredMixin
+from .utils import MarkdownTextAreaWidget
+from .models import Post, Tag
+
 
 class IndexView(ListView):
     template_name = "index.html"
     model = Post
 
     def dispatch(self, request, *args, **kwargs):
-        year = kwargs.get('year', '') 
-        month = kwargs.get('month', '') 
+        year = kwargs.get('year', None)
+        month = kwargs.get('month', None)
+        tag = self.request.GET.get('tag', None)
         if year:
-            self.year = year 
+            self.year = year
         if month:
-            self.month = month 
+            self.month = month
+        if tag:
+            self.tag = tag
         return super(IndexView, self).dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
-        category = self.request.GET.get('category', None) 
-        tag = self.request.GET.get('tag', None) 
-
         queryset = super(IndexView, self).get_queryset()
-        if tag:
-            queryset = queryset.filter(tags__name=tag)
-        if category:
-            queryset = queryset.filter(category__name=category)
+        if hasattr(self, 'tag'):
+            queryset = queryset.filter(tags__name=self.tag)
         if hasattr(self, 'year') and hasattr(self, 'month'):
-            queryset = queryset.filter(created_at__year=self.year, 
-                                       created_at__month=self.month) 
+            queryset = queryset.filter(created_at__year=self.year,
+                                       created_at__month=self.month)
 
-        # Only diplay English post in the IndexView
-        return queryset.filter(lang='en')
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
-        categories = Category.objects.all()
         tags = Tag.objects.all()
         context.update({
-            'categories': categories,
             'tags': tags
         })
+        
         return context
+
+
+class AdminView(CommonLoginRequiredMixin, IndexView):
+    template_name = 'admin.html'
 
 
 class PostView(DetailView):
     model = Post
-    template_name = 'post.html' 
+    template_name = 'post/post.html'
+
+
+class PostEditView(CommonLoginRequiredMixin):
+    model = Post
+    fields = ['title', 'content', 'tags']
+    template_name = 'post/post_create_edit.html'
+
+    def get_form(self, form_class=None):
+        form = super(PostEditView, self).get_form(form_class)
+        form.fields['content'] = forms.fields.CharField(widget=MarkdownTextAreaWidget)
+        return form
+
+    def get_context_data(self, **kwargs):
+        context = super(PostEditView, self).get_context_data(**kwargs)
+        context.update({
+            'action': self.action
+        })
+        return context
+
+
+class PostCreateView(PostEditView, CreateView):
+    action = 'Create'
+
+
+class PostUpdateView(PostEditView, UpdateView):
+    action = 'Save'
+
+
+class PostDeleteView(CommonLoginRequiredMixin, DeleteView):
+    model = Post
+    template_name = 'post/post_confirm_delete.html'
+    success_url = reverse_lazy('blog:admin')

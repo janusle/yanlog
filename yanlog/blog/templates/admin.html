@@ -17,18 +17,9 @@
             <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
             <time>{{ post.created_at }}</time>
           </span>
-
-          <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
-          {% for tag in post.tags.all %}
-          <span class="label label-info">{{ tag.name }}</span>
-          {% endfor %}
-          </span>
+          <a href="{{ post.get_absolute_url }}edit/" >Edit</a>
         </div>
       </div> <!-- panel -->
-
-    <p>
-      {{ post.content }}
-    </p> <!-- content -->
   </article>
 
   {% endfor %}
