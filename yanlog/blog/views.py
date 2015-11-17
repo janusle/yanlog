@@ -9,6 +9,7 @@ from common.mixin import CommonLoginRequiredMixin
 from .utils import MarkdownTextAreaWidget
 from .models import Post, Tag
 
+
 class IndexView(ListView):
     template_name = "index.html"
     model = Post
@@ -33,8 +34,7 @@ class IndexView(ListView):
             queryset = queryset.filter(created_at__year=self.year,
                                        created_at__month=self.month)
 
-        # Only diplay English post in the IndexView
-        return queryset.filter(lang='en')
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
@@ -42,6 +42,7 @@ class IndexView(ListView):
         context.update({
             'tags': tags
         })
+        
         return context
 
 
