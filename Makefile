@@ -28,4 +28,4 @@ runserver:
 
 test:
 # run tests
-	${MANAGE} test yanlog
+	tox
