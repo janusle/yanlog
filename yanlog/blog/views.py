@@ -14,13 +14,7 @@ class IndexView(ListView):
     model = Post
 
     def dispatch(self, request, *args, **kwargs):
-        year = kwargs.get('year', None)
-        month = kwargs.get('month', None)
         tag = self.request.GET.get('tag', None)
-        if year:
-            self.year = year
-        if month:
-            self.month = month
         if tag:
             self.tag = tag
         return super(IndexView, self).dispatch(request, *args, **kwargs)
@@ -29,10 +23,6 @@ class IndexView(ListView):
         queryset = super(IndexView, self).get_queryset()
         if hasattr(self, 'tag'):
             queryset = queryset.filter(tags__name=self.tag)
-        if hasattr(self, 'year') and hasattr(self, 'month'):
-            queryset = queryset.filter(created_at__year=self.year,
-                                       created_at__month=self.month)
-
         return queryset
 
     def get_context_data(self, **kwargs):
