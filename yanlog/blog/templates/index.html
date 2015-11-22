@@ -2,6 +2,8 @@
 
 {% load parse_markdown %}
 
+
+
 {% block main %}
 
 
@@ -11,7 +13,7 @@
     {% for post in object_list %}
     <article>
       <header class="page-header">
-        <h1><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h1>
+        <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
       </header>
       <div class="panel">
         <div class="panel-body">

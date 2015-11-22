@@ -3,6 +3,8 @@
 {% load bootstrap3 %}
 {% load staticfiles %}
 {% load parse_markdown %}
+{% load disqus_tags %}
+{% disqus_dev %}
 
 {% block main %}
 
@@ -14,6 +16,8 @@
     {% for tag in object.tags.all %}
         {{ tag }}
     {% endfor %}
+
+    {% disqus_show_comments %}
 </div>
 
 

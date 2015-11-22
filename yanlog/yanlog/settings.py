@@ -35,6 +35,7 @@ class Base(cbs.BaseSettings):
         'django.contrib.staticfiles',
         'django.contrib.sites',
         'django.contrib.flatpages',
+        'disqus',
         'bootstrap3',
         'accounts',
         'common',
@@ -92,6 +93,14 @@ class Base(cbs.BaseSettings):
     STATICFILES_DIRS =  (
         os.path.join(BASE_DIR, "static"),
     )
+
+    @cbs.env
+    def DISQUS_API_KEY(self):
+        return ''
+
+    @cbs.env
+    def DISQUS_WEBSITE_SHORTNAME(self):
+        return ''
 
     @cbs.env
     def DEFAULT_DB(self):

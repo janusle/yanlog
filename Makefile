@@ -1,4 +1,6 @@
 MANAGE = ./yanlog/manage.py
+ENVDIR = .envdir
+
 DJANGO_PORT = 9000
 
 all: runserver
@@ -24,7 +26,7 @@ create_superuser:
 
 runserver:
 # manage.py runserver ${DJANGO_PORT}
-	${MANAGE} runserver ${DJANGO_PORT}
+	envdir ${ENVDIR} ${MANAGE} runserver ${DJANGO_PORT}
 
 test:
 # run tests
