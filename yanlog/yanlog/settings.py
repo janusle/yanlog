@@ -10,11 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
-from configurations import Configuration
 import os
 
+import cbs
+import dj_database_url
 
-class Base(Configuration):
+cbs.DEFAULT_ENV_PREFIX = 'DJANGO_'
+
+class Base(cbs.BaseSettings):
 
     SITE_ID = 1
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -32,9 +35,12 @@ class Base(Configuration):
         'django.contrib.staticfiles',
         'django.contrib.sites',
         'django.contrib.flatpages',
+        'disqus',
         'bootstrap3',
+        'accounts',
         'common',
         'blog',
+        'lettuce.django',
     )
 
     MIDDLEWARE_CLASSES = (
@@ -68,12 +74,12 @@ class Base(Configuration):
     WSGI_APPLICATION = 'yanlog.wsgi.application'
     # Database
     # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+
+    def DATABASES(self):
+        return {
+            'default': dj_database_url.parse(self.DEFAULT_DB),
         }
-    }
+
     # Internationalization
     # https://docs.djangoproject.com/en/1.8/topics/i18n/
     LANGUAGE_CODE = 'en-us'
@@ -89,7 +95,30 @@ class Base(Configuration):
         os.path.join(BASE_DIR, "static"),
     )
 
-class Dev(Base):
+    @cbs.env
+    def DISQUS_API_KEY(self):
+        return ''
+
+    @cbs.env
+    def DISQUS_WEBSITE_SHORTNAME(self):
+        return ''
+
+    @cbs.env
+    def DEFAULT_DB(self):
+        return 'postgres://localhost/yanlog'
+
+
+class Local(Base):
+    """ Settings for local development """
+
     SECRET_KEY = 'mostm0ux_s!!9pshj0)wpn1#sf+a52kc*t*+jfp6%@088of5!!'
     # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = True
+
+    @cbs.env
+    def DEFAULT_DB(self):
+        return 'postgres://dev:dev@localhost:5434/yanlog'
+
+
+MODE = os.environ.get('DJANGO_MODE', 'Local').title()
+cbs.apply(MODE, globals())

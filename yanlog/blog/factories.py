@@ -1,5 +1,7 @@
 import factory
+
 from . import models
+
 
 class TagFactory(factory.DjangoModelFactory):
     class Meta:

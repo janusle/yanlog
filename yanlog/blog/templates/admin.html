@@ -1,9 +1,5 @@
 {% extends 'base.html' %}
 
-{% load parse_markdown %}
-
-
-
 {% block main %}
 
 
@@ -13,7 +9,7 @@
     {% for post in object_list %}
     <article>
       <header class="page-header">
-        <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+        <h1>{{ post.title }}</h1>
       </header>
       <div class="panel">
         <div class="panel-body">
@@ -21,18 +17,9 @@
             <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
             <time>{{ post.created_at }}</time>
           </span>
-
-          <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
-          {% for tag in post.tags.all %}
-          <span class="label label-info"><a href="{% url 'blog:index' %}?tag={{ tag.name }}">{{ tag.name }}</a></span>
-          {% endfor %}
-          </span>
+          <a href="{{ post.get_absolute_url }}edit/" >Edit</a>
         </div>
       </div> <!-- panel -->
-
-    <p>
-      {{ post.content|md }}
-    </p> <!-- content -->
   </article>
 
   {% endfor %}
