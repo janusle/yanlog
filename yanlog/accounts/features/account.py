@@ -1,6 +1,7 @@
-from lettuce import before, after, step, world
+from lettuce import after, before, step, world
 from lettuce.django import django_url
 from splinter import Browser
+
 
 @before.all
 def set_up():
