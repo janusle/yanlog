@@ -11,9 +11,9 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
 import os
+
 import cbs
 import dj_database_url
-
 
 cbs.DEFAULT_ENV_PREFIX = 'DJANGO_'
 

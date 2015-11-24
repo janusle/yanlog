@@ -1,5 +1,6 @@
-from django.utils.safestring import mark_safe
 from django import forms
+from django.utils.safestring import mark_safe
+
 
 class MarkdownTextAreaWidget(forms.widgets.Textarea):
     def render(self, name, value, attrs=None):

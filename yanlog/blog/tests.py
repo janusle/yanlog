@@ -1,6 +1,7 @@
 from django.test import TestCase
 
-from .factories import TagFactory, PostFactory
+from .factories import PostFactory, TagFactory
+
 
 class BlogTestCase(TestCase):
 

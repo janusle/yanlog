@@ -1,13 +1,15 @@
-from django.shortcuts import render
-from django.views.generic import (ListView, DetailView,
-                                  UpdateView, CreateView, DeleteView)
-from django.http import Http404
 from django import forms
 from django.core.urlresolvers import reverse_lazy
+from django.http import Http404
+from django.shortcuts import render
+from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
+                                  UpdateView)
 
 from common.mixin import CommonLoginRequiredMixin
-from .utils import MarkdownTextAreaWidget
+
 from .models import Post, Tag
+from .utils import MarkdownTextAreaWidget
+
 
 class IndexView(ListView):
     template_name = "index.html"
