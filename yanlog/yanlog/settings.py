@@ -40,6 +40,7 @@ class Base(cbs.BaseSettings):
         'accounts',
         'common',
         'blog',
+        'lettuce.django',
     )
 
     MIDDLEWARE_CLASSES = (

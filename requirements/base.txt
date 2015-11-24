@@ -10,3 +10,5 @@ Pillow==2.8.1
 markdown2==2.3.0
 pygments==2.0.2
 envdir==0.7
+lettuce==0.2.21
+splinter==0.7.3
