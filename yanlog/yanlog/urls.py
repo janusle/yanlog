@@ -1,5 +1,6 @@
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.contrib.flatpages import views
 
 from blog.views import IndexView
 
@@ -12,4 +13,5 @@ urlpatterns = [
         include('common.urls', namespace='common', app_name='common')),
     url(r'^accounts/',
         include('accounts.urls', namespace='accounts', app_name='accounts')),
+    url(r'^(?P<url>.*/)$', views.flatpage),
 ]
