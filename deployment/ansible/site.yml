@@ -1,0 +1,14 @@
+---
+
+- name: Base setup for application deployment
+  hosts: web
+  user: ubuntu
+  sudo: yes
+  sudo_user: root
+  gather_facts: no
+
+  roles:
+    - common
+
+  tags:
+    - common

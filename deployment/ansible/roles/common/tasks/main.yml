@@ -1,0 +1,19 @@
+---
+
+- name: Install common dependencies
+  apt:
+    name: {{ itme }}
+    update_cache: True
+  with_items:
+    - git-core
+    - postgresql-client
+    - build-essential
+    - python-setuptools
+    - python-pip
+    - python-dev
+    - libpq-dev
+
+
+- name: Install virtualenv
+  pip:
+    name: virtualenv
