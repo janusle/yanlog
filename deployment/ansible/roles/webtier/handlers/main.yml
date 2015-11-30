@@ -1,2 +1,5 @@
 ---
-# handlers file for webtier
+
+- name: nginx restart
+  service:
+    name: nginx

@@ -1,0 +1,16 @@
+---
+
+- name: Create directories for the application
+  file:
+    path: {{ item }}
+    state: directory
+    recurse: yes
+    mode: 0755
+  with_items:
+    - /srv/web/{{ app_name }}/code
+    - /srv/web/{{ app_name }}/venv
+    - /srv/web/{{ app_name }}/envdir
+    - /srv/web/{{ app_name }}/log
+    - /srv/web/{{ app_name }}/uwsgi/etc
+    - /srv/web/{{ app_name }}/uwsgi/sock
+    - /srv/web/{{ app_name }}/nginx

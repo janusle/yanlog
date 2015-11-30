@@ -3,7 +3,7 @@
 - name: Install common dependencies
   apt:
     name: {{ itme }}
-    update_cache: True
+    update_cache: yes
   with_items:
     - git-core
     - postgresql-client

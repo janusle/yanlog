@@ -1,0 +1,6 @@
+---
+
+- name: Install nginx
+  apt:
+    name: nginx
+  notify: nginx restart

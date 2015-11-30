@@ -1,2 +1,11 @@
 ---
-# tasks file for webtier
+
+- name: Base setup for webtier
+  include: base.yml
+
+- name: Install Nginx
+  include: nginx.yml
+
+
+- name: Install Django
+  include: django.yml
