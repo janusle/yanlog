@@ -1,5 +1,4 @@
 -r base.txt
-tox
 coverage
 flake8
 isort
