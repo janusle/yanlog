@@ -1,0 +1,15 @@
+---
+
+machine:
+  services:
+    - postgresql  
+
+  python:
+    version:
+      2.7.6
+
+
+test:
+  override:
+    - tox
+   
