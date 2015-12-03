@@ -1,7 +1,5 @@
 from django import forms
 from django.core.urlresolvers import reverse_lazy
-from django.http import Http404
-from django.shortcuts import render
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
 
@@ -53,7 +51,8 @@ class PostEditView(CommonLoginRequiredMixin):
 
     def get_form(self, form_class=None):
         form = super(PostEditView, self).get_form(form_class)
-        form.fields['content'] = forms.fields.CharField(widget=MarkdownTextAreaWidget)
+        form.fields['content'] = forms.fields.CharField(
+            widget=MarkdownTextAreaWidget)
         return form
 
     def get_context_data(self, **kwargs):
