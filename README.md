@@ -1,5 +1,5 @@
 # Yanlog
-![Build status](https://circleci.com/gh/janusle/yanlog.png?style=shield&circle-token=6edbd235aecaa8db636ae888a6b13a8f9d510a47)
+[![Build Status](https://circleci.com/gh/janusle/yanlog.svg?style=svg&circle-token=6edbd235aecaa8db636ae888a6b13a8f9d510a47)](https://circleci.com/gh/janusle/yanlog)
 
 A personal blog built with Django.
 
