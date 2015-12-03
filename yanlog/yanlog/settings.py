@@ -17,6 +17,7 @@ import dj_database_url
 
 cbs.DEFAULT_ENV_PREFIX = 'DJANGO_'
 
+
 class Base(cbs.BaseSettings):
 
     SITE_ID = 1
@@ -91,7 +92,7 @@ class Base(cbs.BaseSettings):
     # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
     STATIC_URL = '/static/'
-    STATICFILES_DIRS =  (
+    STATICFILES_DIRS = (
         os.path.join(BASE_DIR, "static"),
     )
 
