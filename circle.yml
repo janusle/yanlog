@@ -5,7 +5,7 @@ machine:
     - postgresql  
   
   environment:
-    DJANGO_DEFAULT_DB: 'postgres://ubuntu@localhost/circle_test'
+    DEFAULT_DB: 'postgres://ubuntu@localhost/circle_test'
 
   python:
     version:
