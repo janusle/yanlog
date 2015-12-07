@@ -1,6 +1,9 @@
 MANAGE = ./yanlog/manage.py
 ENVDIR = .envdir
-
+ANSIBLE_PLAYBOOK = ansible-playbook -vvvv
+ANSIBLE_ROOT = deployment/ansible
+ENV_VAGRANT = ${ANSIBLE_ROOT}/environments/vagrant
+PLAYBOOK = ${ANSIBLE_ROOT}/site.yml
 DJANGO_PORT = 9000
 
 all: runserver
@@ -31,3 +34,7 @@ runserver:
 test:
 # run tests
 	tox
+
+deploy_test:
+# Deploy to the vagrant machine locally
+	${ANSIBLE_PLAYBOOK} -i ${ENV_VAGRANT} ${PLAYBOOK}

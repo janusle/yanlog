@@ -2,7 +2,7 @@
 
 - name: Install common dependencies
   apt:
-    name: {{ itme }}
+    name: "{{ item }}"
     update_cache: yes
   with_items:
     - git-core
@@ -17,3 +17,7 @@
 - name: Install virtualenv
   pip:
     name: virtualenv
+
+
+- name: Set hostname
+  hostname: name={{ hostname_base }}-{{ hostname_suffix }}

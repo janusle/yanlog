@@ -1,0 +1,3 @@
+---
+
+hostname_base: "{{ app_name }}"

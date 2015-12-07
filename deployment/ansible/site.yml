@@ -7,6 +7,9 @@
   sudo_user: root
   gather_facts: no
 
+  vars:
+    app_name: yanlog
+
   roles:
     - common
 
@@ -16,7 +19,7 @@
 
 - name: Set up webtier on the server
   hosts: web
-  user: nginx
+  user: ubuntu
   sudo: yes
   sudo_user: root
   gather_facts: no

@@ -2,7 +2,7 @@
 
 - name: Create directories for the application
   file:
-    path: {{ item }}
+    path: "{{ item }}"
     state: directory
     recurse: yes
     mode: 0755
