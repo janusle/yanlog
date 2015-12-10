@@ -7,11 +7,11 @@
     recurse: yes
     mode: 0755
   with_items:
-    - /srv/web/{{ app_name }}/code
-    - /srv/web/{{ app_name }}/static
-    - /srv/web/{{ app_name }}/venv
-    - /srv/web/{{ app_name }}/envdir
-    - /srv/web/{{ app_name }}/log
-    - /srv/web/{{ app_name }}/uwsgi/etc
-    - /srv/web/{{ app_name }}/uwsgi/sock
-    - /srv/web/{{ app_name }}/nginx
+    - /srv/www/{{ domain_name }}/code
+    - /srv/www/{{ domain_name }}/static
+    - /srv/www/{{ domain_name }}/venv
+    - /srv/www/{{ domain_name }}/envdir
+    - /srv/www/{{ domain_name }}/log
+    - /srv/www/{{ domain_name }}/uwsgi/etc
+    - /srv/www/{{ domain_name }}/uwsgi/sock
+    - /srv/www/{{ domain_name }}/nginx

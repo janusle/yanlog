@@ -11,3 +11,10 @@
 
 - name: Install Django
   include: django.yml
+
+- name: Set recursive ownership to www-data:staff for the site directory
+  file:
+    path: /srv/www/{{ domain_name }}
+    owner: www-data
+    group: staff
+    recurse: yes

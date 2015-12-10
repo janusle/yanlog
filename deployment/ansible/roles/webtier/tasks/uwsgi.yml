@@ -9,7 +9,7 @@
 - name: Generate uWSGI conf
   template:
     src: uwsgi.ini.j2
-    dest: /srv/web/{{ app_name }}/uwsgi/etc/{{ app_name }}_uwsgi.ini
+    dest: /srv/www/{{ domain_name }}/uwsgi/etc/{{ app_name }}_uwsgi.ini
 
 
 - name: Create a directory for uWSGI vassals
@@ -22,7 +22,7 @@
 - name: Create soft link to the uWSGI vassals directory
   file:
     state: link
-    src: /srv/web/{{ app_name }}/uwsgi/etc/{{ app_name }}_uwsgi.ini
+    src: /srv/www/{{ domain_name }}/uwsgi/etc/{{ app_name }}_uwsgi.ini
     path: /etc/uwsgi/vassals/{{ app_name }}_uwsgi.ini
 
 

@@ -1,15 +1,15 @@
 [uwsgi]
 
-chdir          = /srv/web/{{ app_name }}/code
+chdir          = /srv/www/{{ domain_name }}/code
 
 module         = {{ app_name }}.wsgi
 
-home           = /srv/web/{{ app_name }}/venv
+home           = /srv/web/{{ domain_name }}/venv
 
 master         = true
 
 processes      = {{ process_number }}
 
-socket         = /srv/web/{{ app_name }}/uwsgi/{{ app_name }}.sock
+socket         = /srv/www/{{ domain_name }}/uwsgi/{{ app_name }}.sock
 
 vacuum         = true
