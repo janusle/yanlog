@@ -24,6 +24,9 @@
   sudo_user: root
   gather_facts: no
 
+  vars:
+    app_name: yanlog
+
   roles:
     - webtier
 

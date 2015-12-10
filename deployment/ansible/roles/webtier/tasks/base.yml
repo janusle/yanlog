@@ -8,6 +8,7 @@
     mode: 0755
   with_items:
     - /srv/web/{{ app_name }}/code
+    - /srv/web/{{ app_name }}/static
     - /srv/web/{{ app_name }}/venv
     - /srv/web/{{ app_name }}/envdir
     - /srv/web/{{ app_name }}/log

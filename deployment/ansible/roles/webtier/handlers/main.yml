@@ -3,3 +3,11 @@
 - name: nginx restart
   service:
     name: nginx
+    state: restarted
+    enabled: yes
+
+
+- name: update supervisor uWSGI setting
+  supervisorctl:
+    name: uwsgi
+    state: restarted

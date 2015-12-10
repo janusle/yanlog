@@ -10,6 +10,6 @@ master         = true
 
 processes      = {{ process_number }}
 
-socket         = /srv/web/{{ app_name }}/uwsgi/sock
+socket         = /srv/web/{{ app_name }}/uwsgi/{{ app_name }}.sock
 
 vacuum         = true

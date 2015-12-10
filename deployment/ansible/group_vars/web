@@ -1,3 +1,5 @@
 ---
 
 hostname_suffix: web
+
+domain_name: 192.168.33.250
