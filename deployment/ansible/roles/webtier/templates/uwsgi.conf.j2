@@ -1,19 +1,20 @@
 [program:uwsgi]
 
 
-command=/usr/local/bin/uwsgi --emperor /etc/uwsgi/vassals --uid www-data --gid www-data  /var/log/uwsgi-emperor.log
+command=/usr/local/bin/uwsgi --emperor /etc/uwsgi/vassals --uid www-data --gid www-data
 
 ; The directory to your Django project
-directory=/srv/www/{{ domain_name }}/code/src
+directory=/srv/www/{{ domain_name }}/code/{{ app_name }}
+
 
 ; Supervisor will start as many instances of this program as named by numprocs
 numprocs=1
 
 ; Put process stdout output in this file
-stdout_logfile=/var/log/supervisord/uwsgi_worker.log
+stdout_logfile=/var/log/supervisor/uwsgi_worker.log
 
 ; Put process stderr output in this file
-stderr_logfile=/var/log/supervisord/uwsgi_worker.log
+stderr_logfile=/var/log/supervisor/uwsgi_worker.log
 
 ; If true, this program will start automatically when supervisord is started
 autostart=true

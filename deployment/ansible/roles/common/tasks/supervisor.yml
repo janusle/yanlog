@@ -9,13 +9,13 @@
 
 - name: Create log directory
   file:
-    path: /var/log/supervisord
+    path: /var/log/supervisor
     state: directory
 
 
 - name: Create log file
   file:
-    path: /var/log/supervisord/supervisord.log
+    path: /var/log/supervisor/supervisord.log
     state: touch
 
 

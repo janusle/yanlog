@@ -11,7 +11,7 @@
 
 - name: Install requirements
   pip:
-    virtualenv: /srv/www/{{ domain_name }}/env
+    virtualenv: /srv/www/{{ domain_name }}/venv
     requirements: /srv/www/{{ domain_name }}/code/requirements/prod.txt
 
 

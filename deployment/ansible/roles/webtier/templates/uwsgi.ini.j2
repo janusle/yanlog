@@ -1,6 +1,6 @@
 [uwsgi]
 
-chdir          = /srv/www/{{ domain_name }}/code
+chdir          = /srv/www/{{ domain_name }}/code/{{ app_name }}
 
 module         = {{ app_name }}.wsgi
 
