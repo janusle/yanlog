@@ -1,6 +1,7 @@
 MANAGE = ./yanlog/manage.py
 ENVDIR = .envdir
 ANSIBLE_PLAYBOOK = ansible-playbook -vvvv
+ANSIBLE_VAULT = ansible-vault
 ANSIBLE_ROOT = deployment/ansible
 ENV_VAGRANT = ${ANSIBLE_ROOT}/environments/vagrant
 PLAYBOOK = ${ANSIBLE_ROOT}/site.yml
@@ -34,6 +35,10 @@ runserver:
 test:
 # run tests
 	tox
+
+edit-vagrant-web:
+# Edit host_vars/vagrant_web
+	${ANSIBLE_VAULT} edit ${ANSIBLE_ROOT}/host_vars/vagrant_web --vault-password-file .vault-password-file
 
 deploy_test:
 # Deploy to the vagrant machine locally

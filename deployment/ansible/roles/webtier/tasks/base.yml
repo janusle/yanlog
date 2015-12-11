@@ -15,3 +15,28 @@
     - /srv/www/{{ domain_name }}/uwsgi/etc
     - /srv/www/{{ domain_name }}/uwsgi/sock
     - /srv/www/{{ domain_name }}/nginx
+
+
+- name: Add environment variables to envdir directory
+  copy:
+    dest: "/srv/www/{{ domain_name }}/envdir/{{ item.key }}"
+    content: "{{ item.value }}"
+  no_log: true
+  with_dict:
+    DJANGO_DISQUS_API_KEY: "{{ django_environment.DJANGO_DISQUS_API_KEY }}"
+    DJANGO_DISQUS_WEBSITE_SHORNAME: "{{ django_environment.DJANGO_DISQUS_WEBSITE_SHORNAME }}"
+    DJANGO_MODE: "{{ django_environment.DJANGO_MODE }}"
+    DJANGO_DEFAULT_DB: "{{ django_environment.DJANGO_DEFAULT_DB }}"
+    DJANGO_SECRET_KEY: "{{ django_environment.DJANGO_SECRET_KEY }}"
+
+
+- name: Insert deploy key
+  copy:
+    content: "{{ item.content }}"
+    dest: "{{ item.ssh_path }}/github_deploy_rsa"
+    owner: "{{ item.user }}"
+    group: "{{ item.user }}"
+    mode: 0600
+  with_items:
+    - { "ssh_path": "/root/.ssh" , content: "{{ deploy_key }}", user: "root" }
+  no_log: true

@@ -6,13 +6,10 @@
   sudo: yes
   sudo_user: root
   gather_facts: no
-
   vars:
     app_name: yanlog
-
   roles:
     - common
-
   tags:
     - common
 
@@ -23,12 +20,9 @@
   sudo: yes
   sudo_user: root
   gather_facts: no
-
   vars:
     app_name: yanlog
-
   roles:
     - webtier
-
   tags:
     - webtier

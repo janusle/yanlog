@@ -1,0 +1,15 @@
+---
+
+hostname_base: "{{ app_name }}"
+
+django_environment:
+  DJANGO_MODE: Prod
+  DJANGO_DEFAULT_DB: postgres://localhost/yanlog
+  DJANGO_SECRET_KEY: django_secret_key
+  DJANGO_DISQUS_API_KEY: disqus_api_key
+  DJANGO_DISQUS_WEBSITE_SHORNAME: disqus_website_shorname
+
+repo: git_repo
+
+deploy_key: |
+   deploy_ssh_key(private)

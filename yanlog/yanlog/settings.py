@@ -35,8 +35,12 @@ class Base(cbs.BaseSettings):
         'django.contrib.staticfiles',
         'django.contrib.sites',
         'django.contrib.flatpages',
+
+        # Third party apps
         'disqus',
         'bootstrap3',
+
+        # Local apps
         'accounts',
         'common',
         'blog',
@@ -107,17 +111,26 @@ class Base(cbs.BaseSettings):
     def DEFAULT_DB(self):
         return 'postgres://localhost/yanlog'
 
+    @cbs.env
+    def SECRET_KEY(self):
+        return None
+
 
 class Local(Base):
     """ Settings for local development """
 
     SECRET_KEY = 'mostm0ux_s!!9pshj0)wpn1#sf+a52kc*t*+jfp6%@088of5!!'
-    # SECURITY WARNING: don't run with debug turned on in production!
+
     DEBUG = True
 
-    @cbs.env
-    def DEFAULT_DB(self):
-        return 'postgres://dev:dev@localhost:5434/yanlog'
+    DEFAULT_DB = 'postgres://dev:dev@localhost:5434/yanlog'
+
+
+class Prod(Base):
+    """ Settings for production """
+
+    DEBUG = False
+
 
 
 MODE = os.environ.get('DJANGO_MODE', 'Local').title()

@@ -4,7 +4,9 @@ chdir          = /srv/www/{{ domain_name }}/code
 
 module         = {{ app_name }}.wsgi
 
-home           = /srv/web/{{ domain_name }}/venv
+home           = /srv/www/{{ domain_name }}/venv
+
+envdir         = /srv/www/{{ domain_name }}/envdir
 
 master         = true
 
