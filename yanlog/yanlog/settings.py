@@ -100,6 +100,10 @@ class Base(cbs.BaseSettings):
     )
 
     @cbs.env
+    def STATIC_ROOT(self):
+        return ''
+
+    @cbs.env
     def DISQUS_API_KEY(self):
         return ''
 

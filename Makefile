@@ -1,7 +1,8 @@
 MANAGE = ./yanlog/manage.py
 ENVDIR = .envdir
-ANSIBLE_PLAYBOOK = ansible-playbook -vvvv
-ANSIBLE_VAULT = ansible-vault
+ANSIBLE_ARGS = --vault-password-file .vault-password-file
+ANSIBLE_PLAYBOOK = ansible-playbook ${ANSIBLE_ARGS} -vvvv
+ANSIBLE_VAULT = ansible-vault ${ANSIBLE_ARGS}
 ANSIBLE_ROOT = deployment/ansible
 ENV_VAGRANT = ${ANSIBLE_ROOT}/environments/vagrant
 PLAYBOOK = ${ANSIBLE_ROOT}/site.yml
