@@ -22,7 +22,7 @@ class Base(cbs.BaseSettings):
     SITE_ID = 1
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-    ALLOWED_HOSTS = []
+    ALLOWED_HOSTS = ['127.0.0.1', 'yanle.me']
     # Application definition
     INSTALLED_APPS = (
         'django.contrib.admin',
