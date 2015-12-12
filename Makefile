@@ -39,7 +39,7 @@ test:
 
 edit-vagrant-web:
 # Edit host_vars/vagrant_web
-	${ANSIBLE_VAULT} edit ${ANSIBLE_ROOT}/host_vars/vagrant_web --vault-password-file .vault-password-file
+	${ANSIBLE_VAULT} edit ${ANSIBLE_ROOT}/host_vars/yanlog_vagrant --vault-password-file .vault-password-file
 
 deploy_test:
 # Deploy to the vagrant machine locally

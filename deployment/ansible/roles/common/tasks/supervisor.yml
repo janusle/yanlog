@@ -7,16 +7,13 @@
     update_cache: yes
 
 
-- name: Create log directory
+- name: Create log directory and file for supervisor
   file:
-    path: /var/log/supervisor
-    state: directory
-
-
-- name: Create log file
-  file:
-    path: /var/log/supervisor/supervisord.log
-    state: touch
+    path: "{{ item.path }}"
+    state: "{{ item.state }}"
+  with_items:
+    - { path: /var/log/supervisord, state: directory }
+    - { path: /var/log/supervisord/supervisord.log, state: touch }
 
 
 - name: Configure supervisor
@@ -24,3 +21,10 @@
     src: supervisor.conf.j2
     dest: /etc/supervisor/supervisord.conf
   notify: restart supervisor
+
+
+- name: Make sure supervisor is running
+  service:
+      name: supervisor
+      state: started
+      enabled: yes

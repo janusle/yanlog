@@ -38,5 +38,16 @@
     group: "{{ item.user }}"
     mode: 0600
   with_items:
-    - { "ssh_path": "/root/.ssh" , content: "{{ deploy_key }}", user: "root" }
+    - { ssh_path: "/root/.ssh" , content: "{{ deploy_key }}", user: "root" }
   no_log: true
+
+
+- name: Add github ssh config to the config file
+  lineinfile:
+    dest: "{{ item.ssh_conf_path }}"
+    line: |
+      Host {{ item.host }}
+        IdentityFile {{ item.private_key }}
+    create: True
+  with_items:
+    - { ssh_conf_path: "/root/.ssh/config", host: "github.com", private_key: "~/.ssh/github_deploy_rsa" }

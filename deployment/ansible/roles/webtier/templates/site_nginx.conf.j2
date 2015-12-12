@@ -11,7 +11,11 @@ server {
     listen      80;
 
     # the domain name it will serve for
+    {% if domain_name == 'yanlog_vagrant' %}
+    server_name 127.0.0.1;
+    {% else %}
     server_name {{ domain_name }};
+    {% endif %}
     charset     utf-8;
 
     # max upload size

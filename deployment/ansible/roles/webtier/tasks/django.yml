@@ -19,7 +19,7 @@
   django_manage:
     command: migrate
     app_path: /srv/www/{{ domain_name }}/code/{{ app_name }}
-    virtualenv: /srv/www/{{ domain_name }}/env
+    virtualenv: /srv/www/{{ domain_name }}/venv
   environment: django_environment
   when: is_web_node == True
 
@@ -28,6 +28,6 @@
   django_manage:
     command: collectstatic --noinput
     app_path: /srv/www/{{ domain_name }}/code/{{ app_name }}
-    virtualenv: /srv/www/{{ domain_name }}/env
+    virtualenv: /srv/www/{{ domain_name }}/venv
   environment: django_environment
   when: is_web_node == True
