@@ -5,12 +5,22 @@
   sudo: yes
   sudo_user: root
   gather_facts: no
-  vars:
-    app_name: yanlog
   roles:
     - common
   tags:
     - common
+
+
+# This step is optional.
+- name: Set up dbtier on the server
+  hosts: web
+  sudo: yes
+  sudo_user: root
+  gather_facts: no
+  roles:
+    - { role: dbtier, when: install_db == True }
+  tags:
+    - dbtier
 
 
 - name: Set up webtier on the server
@@ -18,8 +28,6 @@
   sudo: yes
   sudo_user: root
   gather_facts: no
-  vars:
-    app_name: yanlog
   roles:
     - webtier
   tags:

@@ -3,7 +3,7 @@
 - name: Install nginx
   apt:
     name: nginx
-  notify: nginx restart
+  notify: restart nginx
 
 
 - name: Generate nginx conf for the site
@@ -17,4 +17,4 @@
     state: link
     src: /srv/www/{{ domain_name }}/nginx/{{ app_name }}_nginx.conf
     path: /etc/nginx/sites-enabled/{{ app_name }}_nginx.conf
-  notify: nginx restart
+  notify: restart nginx

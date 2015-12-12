@@ -1,6 +1,16 @@
 ---
 
-hostname_base: "{{ app_name }}"
+app_name: {{ app_name here }}
+
+hostname_base: {{ app_name }}
+
+install_db: True
+# If install_db is False, the following five lines are no need to set
+db_host: {{ db_host }}
+db_port: {{ db_port }}
+db_user: {{ db_user }}
+db_password: {{ db_password }}
+db_name: {{ db_name }}
 
 django_environment:
   DJANGO_MODE: Prod

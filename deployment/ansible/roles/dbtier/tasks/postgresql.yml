@@ -1,0 +1,27 @@
+---
+
+- name: Add PostgreSQL apt repository
+  apt_repository:
+    repo: 'deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main'
+    update_cache: True
+    state: present
+
+
+- name: Import repository signing key
+  apt_key:
+    url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+    state: present
+
+
+- name: Install PostgreSQL
+  apt:
+    name: postgresql-9.4
+    update_cache: True
+    state: present
+
+
+- name: Ensure the PostgreSQL is running
+  service:
+    name: postgresql
+    state: started
+    enabled: True

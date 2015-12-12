@@ -1,13 +1,13 @@
 ---
 
-- name: nginx restart
+- name: restart nginx
   service:
     name: nginx
     state: restarted
     enabled: yes
 
 
-- name: update supervisor uWSGI setting
+- name: restart uwsgi
   supervisorctl:
     name: uwsgi
     state: restarted

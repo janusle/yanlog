@@ -30,4 +30,4 @@
   template:
     src: uwsgi.conf.j2
     dest: /etc/supervisor/conf.d/uwsgi.conf
-  notify: update supervisor uWSGI setting
+  notify: restart uwsgi

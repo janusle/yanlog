@@ -6,12 +6,13 @@
     update_cache: yes
   with_items:
     - git-core
-    - postgresql-client
     - build-essential
     - python-setuptools
     - python-pip
     - python-dev
     - libpq-dev
+    - postgresql-client
+    - python-psycopg2
 
 
 - name: Install virtualenv
