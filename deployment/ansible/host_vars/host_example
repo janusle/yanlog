@@ -1,0 +1,32 @@
+---
+
+app_name: {{ app_name here }}
+
+hostname_base: {{ app_name }}
+
+users:
+  - { username: {{ username }}, github: {{ github_name }} }
+
+
+install_db: True
+# If install_db is False, the following five lines are no need to set
+db_host: {{ db_host }}
+db_port: {{ db_port }}
+db_user: {{ db_user }}
+db_password: {{ db_password }}
+db_name: {{ db_name }}
+
+django_environment:
+  DJANGO_MODE: Prod
+  DJANGO_DEFAULT_DB: postgres://localhost/yanlog
+  DJANGO_SECRET_KEY: {{ django_secret_key }}
+  DJANGO_STATIC_ROOT: {{ root_path }}
+  DJANGO_DISQUS_API_KEY: {{ disqus_api_key }}
+  DJANGO_DISQUS_WEBSITE_SHORNAME: {{ disqus_website_shorname }}
+
+repo: {{ git_repo }}
+
+branch: {{ branch }}
+
+deploy_key: |
+   {{ deploy_ssh_key(private) }}

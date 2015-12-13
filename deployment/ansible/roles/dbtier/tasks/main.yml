@@ -1,0 +1,9 @@
+---
+
+- name: Install postgresql
+  include: postgresql.yml
+
+- name: Initialise the db
+  include: init_db.yml
+  become: True
+  become_user: postgres

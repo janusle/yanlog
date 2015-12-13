@@ -1,0 +1,13 @@
+---
+
+- name: restart nginx
+  service:
+    name: nginx
+    state: restarted
+    enabled: yes
+
+
+- name: restart uwsgi
+  supervisorctl:
+    name: uwsgi
+    state: restarted

@@ -1,0 +1,18 @@
+# This file is managed by ansible
+[uwsgi]
+
+chdir          = /srv/www/{{ domain_name }}/code/{{ app_name }}
+
+module         = {{ app_name }}.wsgi
+
+home           = /srv/www/{{ domain_name }}/venv
+
+envdir         = /srv/www/{{ domain_name }}/envdir
+
+master         = true
+
+processes      = {{ process_number }}
+
+socket         = /srv/www/{{ domain_name }}/uwsgi/sock/{{ app_name }}.sock
+
+vacuum         = true

@@ -1,0 +1,30 @@
+---
+
+- name: Install supervisor
+  apt:
+    name: supervisor
+    state: latest
+    update_cache: yes
+
+
+- name: Create log directory and file for supervisor
+  file:
+    path: "{{ item.path }}"
+    state: "{{ item.state }}"
+  with_items:
+    - { path: /var/log/supervisord, state: directory }
+    - { path: /var/log/supervisord/supervisord.log, state: touch }
+
+
+- name: Configure supervisor
+  template:
+    src: supervisor.conf.j2
+    dest: /etc/supervisor/supervisord.conf
+  notify: restart supervisor
+
+
+- name: Make sure supervisor is running
+  service:
+      name: supervisor
+      state: started
+      enabled: yes

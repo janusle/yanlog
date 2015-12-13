@@ -1,0 +1,33 @@
+---
+
+- name: Install uWSGI
+  pip:
+    name: uwsgi
+    version: "{{ uwsgi_version }}"
+
+
+- name: Generate uWSGI conf
+  template:
+    src: uwsgi.ini.j2
+    dest: /srv/www/{{ domain_name }}/uwsgi/etc/{{ app_name }}_uwsgi.ini
+
+
+- name: Create a directory for uWSGI vassals
+  file:
+    path: /etc/uwsgi/vassals
+    state: directory
+    recurse: yes
+
+
+- name: Create soft link to the uWSGI vassals directory
+  file:
+    state: link
+    src: /srv/www/{{ domain_name }}/uwsgi/etc/{{ app_name }}_uwsgi.ini
+    path: /etc/uwsgi/vassals/{{ app_name }}_uwsgi.ini
+
+
+- name: Create supervisor conf for uWSGI
+  template:
+    src: uwsgi.conf.j2
+    dest: /etc/supervisor/conf.d/uwsgi.conf
+  notify: restart uwsgi

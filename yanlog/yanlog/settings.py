@@ -22,10 +22,8 @@ class Base(cbs.BaseSettings):
 
     SITE_ID = 1
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    # Quick-start development settings - unsuitable for production
-    # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
-    # SECURITY WARNING: keep the secret key used in production secret!
-    ALLOWED_HOSTS = []
+
+    ALLOWED_HOSTS = ['127.0.0.1', 'yanle.me']
     # Application definition
     INSTALLED_APPS = (
         'django.contrib.admin',
@@ -36,8 +34,12 @@ class Base(cbs.BaseSettings):
         'django.contrib.staticfiles',
         'django.contrib.sites',
         'django.contrib.flatpages',
+
+        # Third party apps
         'disqus',
         'bootstrap3',
+
+        # Local apps
         'accounts',
         'common',
         'blog',
@@ -97,6 +99,10 @@ class Base(cbs.BaseSettings):
     )
 
     @cbs.env
+    def STATIC_ROOT(self):
+        return ''
+
+    @cbs.env
     def DISQUS_API_KEY(self):
         return ''
 
@@ -108,17 +114,26 @@ class Base(cbs.BaseSettings):
     def DEFAULT_DB(self):
         return 'postgres://localhost/yanlog'
 
+    @cbs.env
+    def SECRET_KEY(self):
+        return None
+
 
 class Local(Base):
     """ Settings for local development """
 
     SECRET_KEY = 'mostm0ux_s!!9pshj0)wpn1#sf+a52kc*t*+jfp6%@088of5!!'
-    # SECURITY WARNING: don't run with debug turned on in production!
+
     DEBUG = True
 
-    @cbs.env
-    def DEFAULT_DB(self):
-        return 'postgres://dev:dev@localhost:5434/yanlog'
+    DEFAULT_DB = 'postgres://dev:dev@localhost:5434/yanlog'
+
+
+class Prod(Base):
+    """ Settings for production """
+
+    DEBUG = False
+
 
 
 MODE = os.environ.get('DJANGO_MODE', 'Local').title()
