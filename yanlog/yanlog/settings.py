@@ -23,6 +23,8 @@ class Base(cbs.BaseSettings):
     SITE_ID = 1
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+    FIXTURE_DIRS = [os.path.join(BASE_DIR, 'fixtures'), ]
+
     ALLOWED_HOSTS = ['127.0.0.1', 'yanle.me']
     # Application definition
     INSTALLED_APPS = (

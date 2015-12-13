@@ -24,6 +24,18 @@
   when: is_web_node
 
 
+- name: Django load fixtures
+  django_manage:
+    command: loaddata
+    fixtures: "{{ item }}"
+    app_path: /srv/www/{{ domain_name }}/code/{{ app_name }}
+    virtualenv: /srv/www/{{ domain_name }}/venv
+  with_items:
+    - flatpages
+  environment: django_environment
+  when: is_web_node
+
+
 - name: Django collect static
   django_manage:
     command: collectstatic --noinput
