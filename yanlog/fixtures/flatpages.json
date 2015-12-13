@@ -1,0 +1,17 @@
+[
+{
+  "model": "flatpages.flatpage",
+  "pk": 1,
+  "fields": {
+    "url": "/about/",
+    "title": "about",
+    "content": "## About  \r\n  \r\n\r\nHi, I'm Yan, this is my blog to which I usually post things I find useful. You can contact me by sending an email at [janusle[at]gmail.com](mailto:janusle@gmail.com).\r\n\r\nIf you want to send me something encrypted, my GPG key is [here](https://keybase.io/janusle/key.asc). Its fingerprint is:\r\n\r\n```\r\n25BA 79DA B73C 5BC6 F8CB 0E91 3467 26BC 23BB A9F9\r\n```\r\nMy keybase.io account is [janusle](https://keybase.io/janusle).",
+    "enable_comments": false,
+    "template_name": "",
+    "registration_required": false,
+    "sites": [
+      1
+    ]
+  }
+}
+]
