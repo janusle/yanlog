@@ -21,7 +21,7 @@
     app_path: /srv/www/{{ domain_name }}/code/{{ app_name }}
     virtualenv: /srv/www/{{ domain_name }}/venv
   environment: django_environment
-  when: is_web_node == True
+  when: is_web_node
 
 
 - name: Django collect static
@@ -30,4 +30,4 @@
     app_path: /srv/www/{{ domain_name }}/code/{{ app_name }}
     virtualenv: /srv/www/{{ domain_name }}/venv
   environment: django_environment
-  when: is_web_node == True
+  when: is_web_node

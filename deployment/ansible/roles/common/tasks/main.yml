@@ -20,9 +20,13 @@
     name: virtualenv
 
 
-- name: Set hostname
-  hostname: name={{ hostname_base }}-{{ hostname_suffix }}
-
-
 - name: Install supervisor
   include: supervisor.yml
+
+
+- name: Add users
+  include: add_users.yml
+
+
+- name: Set hostname
+  hostname: name={{ hostname_base }}-{{ hostname_suffix }}

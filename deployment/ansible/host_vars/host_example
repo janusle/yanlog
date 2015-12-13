@@ -4,6 +4,10 @@ app_name: {{ app_name here }}
 
 hostname_base: {{ app_name }}
 
+users:
+  - { username: {{ username }}, github: {{ github_name }} }
+
+
 install_db: True
 # If install_db is False, the following five lines are no need to set
 db_host: {{ db_host }}

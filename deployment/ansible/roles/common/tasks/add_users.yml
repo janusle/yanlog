@@ -1,0 +1,40 @@
+---
+
+- name: Add admin users
+  user:
+    name: "{{ item.username }}"
+    groups: sudo,staff
+    state: present
+    append: yes
+    shell: /bin/bash
+  with_items: users
+
+
+- name: Add users to sudo
+  template:
+    src: sudoers.d.j2
+    dest: /etc/sudoers.d/{{ item.username }}
+    mode: 0440
+    owner: root
+    group: root
+    validate: "/usr/sbin/visudo -cf %s"
+  with_items: users
+
+
+- name: Add SSH directories
+  file:
+    path: "/home/{{ item.username }}/.ssh"
+    state: directory
+    owner: "{{ item.username }}"
+  with_items: users
+
+
+- name: Add SSH keys
+  get_url:
+    url: "https://github.com/{{ item.github }}.keys"
+    dest: "/home/{{ item.username }}/.ssh/authorized_keys"
+    timeout: 30
+    mode: 0600
+    owner: "{{ item.username }}"
+    force: yes
+  with_items: users
