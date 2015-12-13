@@ -1,10 +1,11 @@
 MANAGE = ./yanlog/manage.py
 ENVDIR = .envdir
 ANSIBLE_ARGS = --vault-password-file .vault-password-file
-ANSIBLE_PLAYBOOK = ansible-playbook ${ANSIBLE_ARGS} -vvvv
+ANSIBLE_PLAYBOOK = ansible-playbook ${ANSIBLE_ARGS} -vvvv --diff
 ANSIBLE_VAULT = ansible-vault ${ANSIBLE_ARGS}
 ANSIBLE_ROOT = deployment/ansible
 ENV_VAGRANT = ${ANSIBLE_ROOT}/environments/vagrant
+ENV_PROD = ${ANSIBLE_ROOT}/environments/production
 PLAYBOOK = ${ANSIBLE_ROOT}/site.yml
 DJANGO_PORT = 9000
 
@@ -37,10 +38,25 @@ test:
 # run tests
 	tox
 
-edit-vagrant-web:
-# Edit host_vars/vagrant_web
+edit-yanlog_vagrant:
+# Edit host_vars/yanlog_vagrant
 	${ANSIBLE_VAULT} edit ${ANSIBLE_ROOT}/host_vars/yanlog_vagrant --vault-password-file .vault-password-file
 
+
+edit-yanlog:
+# Edit host_vars/yanlog
+	${ANSIBLE_VAULT} edit ${ANSIBLE_ROOT}/host_vars/yanlog --vault-password-file .vault-password-file
+
+
 deploy_test:
-# Deploy to the vagrant machine locally
+# Deploy to the local vagrant machine
 	${ANSIBLE_PLAYBOOK} -i ${ENV_VAGRANT} ${PLAYBOOK}
+
+
+deploy_check:
+# Fake-deploy yanlog  
+	${ANSIBLE_PLAYBOOK} -i ${ENV_PROD} ${PLAYBOOK} --check
+
+deploy:
+# Deploy yanlog
+	${ANSIBLE_PLAYBOOK} -i ${ENV_PROD} ${PLAYBOOK}
