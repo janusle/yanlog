@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+<div class="container">
+tags:
+
+<ul>
+{% for tag in tags %}
+  <li>
+  {{ tag.name }}({{ tag.num_posts }})
+  </li>
+{% endfor %}
+</ul>
+
+years:
+
+<ul>
+{% for year in years %}
+  <li>
+    {{ year.year }}({{ year.num_posts }})
+  </li>
+{% endfor %}
+</ul>
+
+</div>
+
+{% endblock %}
