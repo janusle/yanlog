@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+<div class="container">
+
+<h1>Archives</h1>
+
+<h3>By tags</h3>
+
+<ul>
+{% for tag in tags %}
+  <li>
+  <a href='{% url 'blog:index' %}?tag={{ tag.name }}'>{{ tag.name }}({{ tag.num_posts }})</a>
+  </li>
+{% endfor %}
+</ul>
+
+<h3>years</h3>
+
+<ul>
+{% for year in years %}
+  <li>
+  <a href='{% url 'blog:index' %}?year={{ year.year }}'>{{ year.year }}({{ year.num_posts }})</a>
+  </li>
+{% endfor %}
+</ul>
+
+</div>
+
+{% endblock %}

@@ -21,4 +21,7 @@ urlpatterns = [
     url(r'create/$',
         views.PostCreateView.as_view(),
         name='post_create'),
+    url(r'archives/$',
+        views.ArchiveView.as_view(),
+        name='archives'),
 ]

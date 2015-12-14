@@ -1,7 +1,8 @@
 from django import forms
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
-                                  UpdateView)
+                                  UpdateView, TemplateView,)
+from django.db.models import Count
 
 from common.mixin import CommonLoginRequiredMixin
 
@@ -15,24 +16,20 @@ class IndexView(ListView):
 
     def dispatch(self, request, *args, **kwargs):
         tag = self.request.GET.get('tag', None)
+        year = self.request.GET.get('year', None)
         if tag:
             self.tag = tag
+        if year:
+            self.year = year
         return super(IndexView, self).dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
         queryset = super(IndexView, self).get_queryset()
         if hasattr(self, 'tag'):
             queryset = queryset.filter(tags__name=self.tag)
+        if hasattr(self, 'year'):
+            queryset = queryset.filter(created_at__year=self.year)
         return queryset
-
-    def get_context_data(self, **kwargs):
-        context = super(IndexView, self).get_context_data(**kwargs)
-        tags = Tag.objects.all()
-        context.update({
-            'tags': tags
-        })
-
-        return context
 
 
 class AdminView(CommonLoginRequiredMixin, IndexView):
@@ -75,3 +72,22 @@ class PostDeleteView(CommonLoginRequiredMixin, DeleteView):
     model = Post
     template_name = 'post/post_confirm_delete.html'
     success_url = reverse_lazy('blog:admin')
+
+
+class ArchiveView(TemplateView):
+    template_name = 'archive.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ArchiveView, self).get_context_data(**kwargs)
+        tags = (Tag.objects
+                   .annotate(num_posts=Count('post'))
+                   .values('name', 'num_posts'))
+        years = (Post.objects
+                     .extra(select={'year': 'to_char(created_at, \'YYYY\')'})
+                     .values('year').order_by('year')
+                     .annotate(num_posts=Count('id')))
+        context.update({
+            'tags': tags,
+            'years': years,
+        })
+        return context
