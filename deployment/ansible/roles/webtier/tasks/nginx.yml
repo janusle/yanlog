@@ -18,3 +18,10 @@
     src: /srv/www/{{ domain_name }}/nginx/{{ app_name }}_nginx.conf
     path: /etc/nginx/sites-enabled/{{ app_name }}_nginx.conf
   notify: restart nginx
+
+
+- name: Ensure nginx is running
+  service:
+    name: nginx
+    state: started
+    enabled: yes
