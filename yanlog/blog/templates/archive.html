@@ -3,22 +3,23 @@
 {% block main %}
 
 <div class="container">
-tags:
+
+<h3>By tags</h3>
 
 <ul>
 {% for tag in tags %}
   <li>
-  {{ tag.name }}({{ tag.num_posts }})
+  <a href='{% url 'blog:index' %}?tag={{ tag.name }}'>{{ tag.name }}({{ tag.num_posts }})</a>
   </li>
 {% endfor %}
 </ul>
 
-years:
+<h3>years</h3>
 
 <ul>
 {% for year in years %}
   <li>
-    {{ year.year }}({{ year.num_posts }})
+  <a href='{% url 'blog:index' %}?year={{ year.year }}'>{{ year.year }}({{ year.num_posts }})</a>
   </li>
 {% endfor %}
 </ul>
