@@ -45,9 +45,10 @@ $ make
 ## Development Prerequisite
 
 + [Ansible](http://www.ansible.com/) >= 1.9.4
-+ ssh config
 
-ssh config:
+*Note: Ensure ssh config for loginning to the server has been set*
+
+Sample:
 
 ```
 Host yanlog
