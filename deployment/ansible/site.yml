@@ -1,0 +1,34 @@
+---
+
+- name: Base setup for application deployment
+  hosts: web
+  sudo: yes
+  sudo_user: root
+  gather_facts: no
+  roles:
+    - common
+  tags:
+    - common
+
+
+# This step is optional.
+- name: Set up dbtier on the server
+  hosts: web
+  sudo: yes
+  sudo_user: root
+  gather_facts: no
+  roles:
+    - { role: dbtier, when: install_db }
+  tags:
+    - dbtier
+
+
+- name: Set up webtier on the server
+  hosts: web
+  sudo: yes
+  sudo_user: root
+  gather_facts: no
+  roles:
+    - webtier
+  tags:
+    - webtier

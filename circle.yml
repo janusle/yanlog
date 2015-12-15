@@ -1,0 +1,22 @@
+---
+
+machine:
+  services:
+    - postgresql  
+  
+  environment:
+    DJANGO_DEFAULT_DB: 'postgres://ubuntu@localhost/circle_test'
+
+  python:
+    version:
+      2.7.6
+
+dependencies:
+  pre:
+    - pip install -U tox
+
+
+test:
+  override:
+    - tox
+   

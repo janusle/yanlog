@@ -1,0 +1,13 @@
+---
+
+- name: Create db user
+  postgresql_user:
+    name: "{{ db_user }}"
+    password: "{{ db_password }}"
+    role_attr_flags: LOGIN,REPLICATION
+
+
+- name: Create db
+  postgresql_db:
+    name: "{{ db_name }}"
+    owner: "{{ db_user }}"

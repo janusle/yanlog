@@ -1,0 +1,39 @@
+---
+
+- name: Install common dependencies
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+  with_items:
+    - git-core
+    - build-essential
+    - python-setuptools
+    - python-pip
+    - python-dev
+    - libpq-dev
+    - postgresql-client
+    - python-psycopg2
+
+
+- name: Install virtualenv
+  pip:
+    name: virtualenv
+
+
+- name: Install supervisor
+  include: supervisor.yml
+
+
+- name: Add users
+  include: add_users.yml
+
+
+- name: Set hostname
+  hostname: name={{ hostname_base }}-{{ hostname_suffix }}
+
+
+- name: Create a new entry for hostname inserted above in /etc/hosts # Otherwise programs like sudo complains cannot resolve hostname
+  lineinfile:
+    dest: /etc/hosts
+    insertafter: '^127\.0\.0\.1'
+    line: '127.0.1.1 {{ hostname_base }}-{{ hostname_suffix }}'

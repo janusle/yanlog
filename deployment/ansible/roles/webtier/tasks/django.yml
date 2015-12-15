@@ -1,0 +1,45 @@
+---
+
+- name: Clone the repo
+  git:
+    repo: "{{ repo }}"
+    dest: /srv/www/{{ domain_name }}/code/
+    accept_hostkey: yes
+    version: "{{ branch }}"
+    force: yes
+
+
+- name: Install requirements
+  pip:
+    virtualenv: /srv/www/{{ domain_name }}/venv
+    requirements: /srv/www/{{ domain_name }}/code/requirements/prod.txt
+
+
+- name: Django migration
+  django_manage:
+    command: migrate
+    app_path: /srv/www/{{ domain_name }}/code/{{ app_name }}
+    virtualenv: /srv/www/{{ domain_name }}/venv
+  environment: django_environment
+  when: is_web_node
+
+
+- name: Django load fixtures
+  django_manage:
+    command: loaddata
+    fixtures: "{{ item }}"
+    app_path: /srv/www/{{ domain_name }}/code/{{ app_name }}
+    virtualenv: /srv/www/{{ domain_name }}/venv
+  with_items:
+    - flatpages
+  environment: django_environment
+  when: is_web_node
+
+
+- name: Django collect static
+  django_manage:
+    command: collectstatic --noinput
+    app_path: /srv/www/{{ domain_name }}/code/{{ app_name }}
+    virtualenv: /srv/www/{{ domain_name }}/venv
+  environment: django_environment
+  when: is_web_node

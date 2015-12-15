@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% load bootstrap3 %}
+{% load staticfiles %}
+
+{% block main %}
+
+<div class="container">
+
+<form method="post">
+  {% csrf_token %}
+  {% bootstrap_form form %}
+  <input type="submit" value="{{ action }}" />
+</form>
+
+
+<script src="{% static 'js/epiceditor.min.js' %}"></script>
+<script>
+  var opts = {
+    container: 'content_editor',
+    textarea: 'id_content',
+    basePath: '',
+    theme: {
+      base: '{% static "css/epiceditor/themes/base/epiceditor.css" %}',
+      preview: '{% static "css/epiceditor/themes/preview/preview-dark.css" %}',
+      editor: '{% static "css/epiceditor/themes/editor/epic-dark.css" %}'
+    },
+    clientSideStorage: false
+  }
+  var editor = new EpicEditor(opts).load();
+</script>
+
+</div>
+
+{% endblock %}

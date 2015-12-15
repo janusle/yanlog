@@ -1,0 +1,5 @@
+---
+
+hostname_suffix: web
+
+is_web_node: True

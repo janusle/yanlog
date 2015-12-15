@@ -1,5 +1,7 @@
 import factory
+
 from . import models
+
 
 class PageFactory(factory.DjangoModelFactory):
     class Meta:

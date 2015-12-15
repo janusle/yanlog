@@ -1,1 +1,6 @@
 -r base.txt
+
+ipython
+django-debug-toolbar
+django-extensions
+docker-compose

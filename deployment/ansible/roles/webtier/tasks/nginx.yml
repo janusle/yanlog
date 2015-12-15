@@ -1,0 +1,26 @@
+---
+
+- name: Install nginx
+  apt:
+    name: nginx
+  notify: restart nginx
+
+
+- name: Generate nginx conf for the site
+  template:
+    src: site_nginx.conf.j2
+    dest: /srv/www/{{ domain_name }}/nginx/{{ app_name }}_nginx.conf
+
+
+- name: Create soft link to the nginx directory
+  file:
+    state: link
+    src: /srv/www/{{ domain_name }}/nginx/{{ app_name }}_nginx.conf
+    path: /etc/nginx/sites-enabled/{{ app_name }}_nginx.conf
+
+
+- name: Ensure nginx is running
+  service:
+    name: nginx
+    state: started
+    enabled: yes

@@ -1,0 +1,23 @@
+---
+
+- name: Base setup for webtier
+  include: base.yml
+
+- name: Install uwsgi
+  include: uwsgi.yml
+
+- name: Install nginx
+  include: nginx.yml
+
+- name: Install Django
+  include: django.yml
+  notify:
+    - restart nginx
+    - restart uwsgi
+
+- name: Set recursive ownership to www-data:staff for the site directory
+  file:
+    path: /srv/www
+    owner: www-data
+    group: staff
+    recurse: yes

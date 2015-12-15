@@ -1,3 +1,7 @@
 *.pyc
 db.sqlite3
 .DS_Store
+.coverage
+.tox
+.envdir
+.vault-password-file

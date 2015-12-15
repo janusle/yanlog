@@ -1,0 +1,15 @@
+[web]
+# ssh config for 'yanlog_vagrant' should be set to make deployment work
+# A sample setting is like:
+#Host yanlog_vagrant
+#  HostName 127.0.0.1
+#  User vagrant
+#  Port 2202
+#  UserKnownHostsFile /dev/null
+#  StrictHostKeyChecking no
+#  PasswordAuthentication no
+#  IdentityFile /home/yanle/vagrant/yanlog/.vagrant/machines/yanlog_vagrant/virtualbox/private_key
+#  IdentitiesOnly yes
+#  LogLevel FATAL
+
+yanlog_vagrant

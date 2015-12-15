@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% load parse_markdown %}
+
+{% block main %}
+
+<div class="container">
+{{ flatpage.content | md }}
+</div>
+
+{% endblock %}

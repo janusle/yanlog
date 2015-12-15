@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% load parse_markdown %}
+{% load disqus_tags %}
+{% disqus_dev %}
+
+{% block main %}
+
+<div class="container">
+    {{ object.title }}
+
+    {{ object.content | md }}
+
+    {% for tag in object.tags.all %}
+        {{ tag }}
+    {% endfor %}
+
+    {% disqus_show_comments %}
+</div>
+
+
+{% endblock %}
