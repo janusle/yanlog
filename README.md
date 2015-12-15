@@ -3,7 +3,7 @@
 
 A personal blog built with Django.
 
-## Main Stack
+## Main stack
 
 + [Django](https://www.djangoproject.com/)
 + [Bootstrap](http://getbootstrap.com/)
@@ -13,7 +13,7 @@ A personal blog built with Django.
 + [Disqus](https://disqus.com/)
 
 
-## Development Prerequisites
+## Development prerequisites
 
 + [docker](https://www.docker.com/)
 + [virtualenvwrapper](https://virtualenvwrapper.readthedocs.org/en/latest/)
@@ -21,7 +21,7 @@ A personal blog built with Django.
 + libpq-dev(apt)
 
 
-## Development Setup
+## Development setup
 
 ```bash
 $ mkvirtualenv yanlog
@@ -42,7 +42,7 @@ $ make
 ```
 
 
-## Development Prerequisite
+## Deployment prerequisite
 
 + [Ansible](http://www.ansible.com/) >= 1.9.4
 
@@ -58,7 +58,7 @@ Host yanlog
 ```
 
 
-## Development
+## Deployment
 
 ```bash
 $ make deploy
