@@ -40,3 +40,25 @@ $ make
 
 
 ```
+
+
+## Development Prerequisite
+
++ [Ansible](http://www.ansible.com/) >= 1.9.4
++ ssh config
+
+ssh config:
+
+```
+Host yanlog
+  HostName x.x.x.x
+  User xxx
+  IdentityFile ~/.ssh/ssh_key
+```
+
+
+## Development
+
+```bash
+$ make deploy
+```
