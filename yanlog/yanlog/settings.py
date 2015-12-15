@@ -136,6 +136,12 @@ class Local(Base):
     )
 
 
+class Test(Base):
+    """ Settings for testing env """
+
+    SECRET_KEY = 'ul06ndw!fop^owsfzx1x#zh)!%2scv!#!ox1e^9%rrz1&v^bf-'
+
+
 class Prod(Base):
     """ Settings for production """
 
