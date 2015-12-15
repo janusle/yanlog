@@ -148,6 +148,5 @@ class Prod(Base):
     DEBUG = False
 
 
-
 MODE = os.environ.get('DJANGO_MODE', 'Local').title()
 cbs.apply(MODE, globals())
