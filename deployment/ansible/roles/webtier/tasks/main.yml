@@ -11,7 +11,9 @@
 
 - name: Install Django
   include: django.yml
-  notify: restart uwsgi
+  notify:
+    - restart nginx
+    - restart uwsgi
 
 - name: Set recursive ownership to www-data:staff for the site directory
   file:

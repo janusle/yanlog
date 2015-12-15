@@ -130,6 +130,11 @@ class Local(Base):
 
     DEFAULT_DB = 'postgres://dev:dev@localhost:5434/yanlog'
 
+    INSTALLED_APPS = Base.INSTALLED_APPS + (
+        'debug_toolbar',
+        'django_extensions',
+    )
+
 
 class Prod(Base):
     """ Settings for production """
