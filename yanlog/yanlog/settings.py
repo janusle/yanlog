@@ -139,6 +139,11 @@ class Local(Base):
 class Test(Base):
     """ Settings for testing env """
 
+    @cbs.env
+    def DEFAULT_DB(self):
+        # Uses postgres started by docker-compose by default
+        return 'postgres://dev:dev@localhost:5434/yanlog'
+
     SECRET_KEY = 'ul06ndw!fop^owsfzx1x#zh)!%2scv!#!ox1e^9%rrz1&v^bf-'
 
 
