@@ -2,8 +2,8 @@
 
 machine:
   services:
-    - postgresql  
-  
+    - postgresql
+
   environment:
     DJANGO_DEFAULT_DB: 'postgres://ubuntu@localhost/circle_test'
 
@@ -13,10 +13,11 @@ machine:
 
 dependencies:
   pre:
-    - pip install -U tox
+    - pip install -U tox coveralls
 
 
 test:
   override:
     - tox
-   
+  post:
+    - coveralls
