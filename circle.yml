@@ -19,5 +19,3 @@ dependencies:
 test:
   override:
     - tox
-  post:
-    - coveralls
