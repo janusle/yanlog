@@ -47,9 +47,6 @@ class PostEditView(CommonLoginRequiredMixin):
     fields = ['title', 'content', 'created_at', 'tags']
     template_name = 'post/post_create_edit.html'
 
-    def get_initial(self):
-        return {'created_at': timezone.now() }
-
     def get_form(self, form_class=None):
         form = super(PostEditView, self).get_form(form_class)
         form.fields['content'] = forms.fields.CharField(
@@ -66,6 +63,9 @@ class PostEditView(CommonLoginRequiredMixin):
 
 class PostCreateView(PostEditView, CreateView):
     action = 'Create'
+
+    def get_initial(self):
+        return {'created_at': timezone.now()}
 
 
 class PostUpdateView(PostEditView, UpdateView):
