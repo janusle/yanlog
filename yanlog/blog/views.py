@@ -1,6 +1,7 @@
 from django import forms
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import Count
+from django.utils import timezone
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   TemplateView, UpdateView)
 
@@ -43,8 +44,11 @@ class PostView(DetailView):
 
 class PostEditView(CommonLoginRequiredMixin):
     model = Post
-    fields = ['title', 'content', 'tags']
+    fields = ['title', 'content', 'created_at', 'tags']
     template_name = 'post/post_create_edit.html'
+
+    def get_initial(self):
+        return {'created_at': timezone.now() }
 
     def get_form(self, form_class=None):
         form = super(PostEditView, self).get_form(form_class)

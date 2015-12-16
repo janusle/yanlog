@@ -8,7 +8,7 @@ class Post(models.Model):
     title = models.CharField(max_length=100, blank=True)
     lang = models.CharField(max_length=2)
     content = models.TextField(blank=True)
-    created_at = models.DateField(auto_now=True)
+    created_at = models.DateField()
     tags = models.ManyToManyField('Tag')
 
     def get_absolute_url(self):
