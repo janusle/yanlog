@@ -133,3 +133,25 @@ class BlogTestCase(TestCase):
         self.assertRedirects(response, redirect_to)
         post = Post.objects.filter(id=self.post1.id)
         self.assertFalse(post)
+
+    def test_archive_page(self):
+        """Test archive page"""
+        response = self.client.get('/blog/archives/')
+        self.assertEqual(response.status_code, 200)
+        tags = response.context['tags']
+        years = response.context['years']
+        # num of posts of all tags should be only 1
+        map(lambda tag: self.assertEqual(tag['num_posts'], 1), tags)
+        tags_set = set([tag['name'] for tag in tags])
+        # Both tags should be displayed in the archive page
+        self.assertTrue(self.tag1.name in tags_set and
+                        self.tag2.name in tags_set)
+        self.assertEqual(len(years), 2)  # This year and last year
+        # num of posts of each year should be only 1
+        map(lambda year: self.assertEqual(year['num_posts'], 1), years)
+        years_set = set([int(year['year']) for year in years])
+        # Both years should be displayed in the archive page
+        post1 = Post.objects.get(id=self.post1.id)
+        post2 = Post.objects.get(id=self.post2.id)
+        self.assertTrue(post1.created_at.year in years_set and
+                        post2.created_at.year in years_set)
