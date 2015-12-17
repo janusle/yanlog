@@ -115,3 +115,21 @@ class BlogTestCase(TestCase):
         self.assertIn(self.tag1, post.tags.all())
         self.assertIn(self.tag2, post.tags.all())
         self.assertRedirects(response, post.get_absolute_url())
+
+    def test_delete_post_without_login(self):
+        """Test delete a post without login"""
+        response = self.client.get('/blog/%s/delete/' % self.post1.id,
+                                   follow=True)
+        redirect_to = '/accounts/login/?next=/blog/%s/delete/' % self.post1.id
+        self.assertRedirects(response, redirect_to)
+
+    def test_delete_post(self):
+        """Test delete a post"""
+        self.client.login(username=self.user.username,
+                          password=self.user_password)
+        response = self.client.post('/blog/%s/delete/' % self.post1.id,
+                                    follow=True)
+        redirect_to = '/blog/admin/'
+        self.assertRedirects(response, redirect_to)
+        post = Post.objects.filter(id=self.post1.id)
+        self.assertFalse(post)
