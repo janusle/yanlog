@@ -44,7 +44,7 @@ class PostView(DetailView):
 
 class PostEditView(CommonLoginRequiredMixin):
     model = Post
-    fields = ['title', 'content', 'created_at', 'tags']
+    fields = ['title', 'created_at', 'content', 'tags']
     template_name = 'post/post_create_edit.html'
 
     def get_form(self, form_class=None):
