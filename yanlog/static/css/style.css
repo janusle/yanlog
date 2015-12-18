@@ -9,3 +9,7 @@
 body {
   font-size: 18px;
 }
+
+div#blog-nav {
+  margin-bottom: 15px;
+}
