@@ -1,0 +1,13 @@
+{% extends 'management/base.html' %}
+
+{% block admin %}
+
+<ul>
+  {% for post in object_list %}
+    <li>
+      <a href='{{ post.get_absolute_url }}edit/'>{{ post.title }}</a>
+    </li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

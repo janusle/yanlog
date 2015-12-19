@@ -5,14 +5,11 @@
 
 {% block main %}
 
-<div class="container">
-
 <form method="post">
   {% csrf_token %}
   <p> Are you sure you want to delete post "{{ object }}" ?</p>
   <input class="btn btn-danger" type="submit" value="Confirm" />
 </form>
 
-</div>
 
 {% endblock %}

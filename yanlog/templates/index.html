@@ -2,8 +2,6 @@
 
 {% block main %}
 
-<div class="container">
-  <div class="row">
     {% if tag %}
       <h1>Posts in tag "{{ tag }}"</h1>
     {% endif %}
@@ -15,6 +13,5 @@
     {% for post in object_list %}
       {% include 'post/post_snippet.html' %}
     {% endfor %}
-  </div>
-</div>
+
 {% endblock %}

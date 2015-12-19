@@ -49,7 +49,7 @@ class BlogTestCase(TestCase):
 
     def test_visit_post(self):
         """Test visit a post"""
-        response = self.client.get('/blog/%s/' % self.post1.id)
+        response = self.client.get('/blog/post/%s/' % self.post1.id)
         self.assertEqual(response.status_code, 200)
         self.assertIn(self.tag1.name, response.content)
         self.assertIn(self.post1.title, response.content)
@@ -57,16 +57,16 @@ class BlogTestCase(TestCase):
 
     def test_create_post_without_login(self):
         """Test create a post without login"""
-        response = self.client.get('/blog/create/',
+        response = self.client.get('/blog/post/create/',
                                    follow=True)
-        redirect_to = '/accounts/login/?next=/blog/create/'
+        redirect_to = '/accounts/login/?next=/blog/post/create/'
         self.assertRedirects(response, redirect_to)
 
     def test_create_post(self):
         """Test create a new post"""
         self.client.login(username=self.user.username,
                           password=self.user_password)
-        response = self.client.get('/blog/create/')
+        response = self.client.get('/blog/post/create/')
         self.assertEqual(response.status_code, 200)
         new_post = {
             'title': 'Hello world',
@@ -74,7 +74,8 @@ class BlogTestCase(TestCase):
             'created_at': '2015-12-16',
             'tags': [self.tag1.id, self.tag2.id]
         }
-        response = self.client.post('/blog/create/', new_post, follow=True)
+        response = self.client.post('/blog/post/create/',
+                                    new_post, follow=True)
         post = Post.objects.filter(title=new_post['title'])
         self.assertTrue(post)  # Ensure the post is existed.
         post = post[0]
@@ -88,16 +89,17 @@ class BlogTestCase(TestCase):
 
     def test_edit_post_without_login(self):
         """Test edit a post without login"""
-        response = self.client.get('/blog/%s/edit/' % self.post1.id,
+        response = self.client.get('/blog/post/%s/edit/' % self.post1.id,
                                    follow=True)
-        redirect_to = '/accounts/login/?next=/blog/%s/edit/' % self.post1.id
+        redirect_to = '/accounts/login/?next=/blog/post/%s/edit/' %\
+            self.post1.id
         self.assertRedirects(response, redirect_to)
 
     def test_edit_post(self):
         """Test edit a post"""
         self.client.login(username=self.user.username,
                           password=self.user_password)
-        response = self.client.get('/blog/%s/edit/' % self.post1.id)
+        response = self.client.get('/blog/post/%s/edit/' % self.post1.id)
         self.assertEqual(response.status_code, 200)
         new_post = {
             'title': 'Hello world',
@@ -105,7 +107,7 @@ class BlogTestCase(TestCase):
             'created_at': '2015-12-16',
             'tags': [self.tag1.id, self.tag2.id]
         }
-        response = self.client.post('/blog/%s/edit/' % self.post1.id,
+        response = self.client.post('/blog/post/%s/edit/' % self.post1.id,
                                     new_post, follow=True)
         post = Post.objects.get(id=self.post1.id)
         self.assertEqual(post.title, new_post['title'])
@@ -118,16 +120,17 @@ class BlogTestCase(TestCase):
 
     def test_delete_post_without_login(self):
         """Test delete a post without login"""
-        response = self.client.get('/blog/%s/delete/' % self.post1.id,
+        response = self.client.get('/blog/post/%s/delete/' % self.post1.id,
                                    follow=True)
-        redirect_to = '/accounts/login/?next=/blog/%s/delete/' % self.post1.id
+        redirect_to = '/accounts/login/?next=/blog/post/%s/delete/' %\
+            self.post1.id
         self.assertRedirects(response, redirect_to)
 
     def test_delete_post(self):
         """Test delete a post"""
         self.client.login(username=self.user.username,
                           password=self.user_password)
-        response = self.client.post('/blog/%s/delete/' % self.post1.id,
+        response = self.client.post('/blog/post/%s/delete/' % self.post1.id,
                                     follow=True)
         redirect_to = '/blog/admin/'
         self.assertRedirects(response, redirect_to)

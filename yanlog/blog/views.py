@@ -37,11 +37,15 @@ class IndexView(ListView):
         return context
 
 
-class AdminView(CommonLoginRequiredMixin, IndexView):
-    template_name = 'admin.html'
+class PostAdminView(CommonLoginRequiredMixin, ListView):
+    model = Post
+    template_name = 'management/post.html'
 
     def get_context_data(self, **kwargs):
-        context = super(AdminView, self).get_context_data(**kwargs)
+        context = super(PostAdminView, self).get_context_data(**kwargs)
+        context.update({
+            'post_management': True,
+        })
         return context
 
 
