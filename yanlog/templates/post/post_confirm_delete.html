@@ -8,7 +8,7 @@
 <form method="post">
   {% csrf_token %}
   <p> Are you sure you want to delete post "{{ object }}" ?</p>
-  <input class="btn btn-danger" type="submit" value="Confirm" />
+  {% bootstrap_button content="Confirm" button_type="submit"  button_class="btn btn-danger" %}
 </form>
 
 

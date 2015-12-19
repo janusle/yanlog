@@ -13,3 +13,9 @@ body {
 div#blog-nav {
   margin-bottom: 15px;
 }
+
+#post-list {
+  margin-top: 15px;
+  margin-left: 15px;
+  margin-bottom: : 15px;
+}

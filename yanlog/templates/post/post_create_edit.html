@@ -8,15 +8,15 @@
 
 <div id="blog-nav">
 <i class="fa fa-arrow-circle-left"></i>
-<a href="{% url 'blog:admin' %}">Back to post list</a>
+<a href="{% url 'blog:admin' %}">Back to post management</a>
 </div>
 
 <div id="post-editor">
 <form method="post">
   {% csrf_token %}
   {% bootstrap_form form %}
-  <input class="btn btn-success" type="submit" value="{{ action }}" />
-  <a href="{{ post.get_absolute_url }}delete/"><button type="button" class="btn btn-danger">delete</button></a>
+  {% bootstrap_button content=action button_type="submit" button_class="btn btn-success" %}
+  {% bootstrap_button content="delete" href=post.get_absolute_url|add:"delete/" button_class="btn btn-danger" %}
 </form>
 </div>
 
