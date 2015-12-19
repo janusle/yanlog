@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+    {% if tag %}
+      <h1>Posts in tag "{{ tag }}"</h1>
+    {% endif %}
+
+    {% if year %}
+      <h1>Posts in year "{{ year }}"</h1>
+    {% endif %}
+
+    {% for post in object_list %}
+      {% include 'post/post_snippet.html' %}
+    {% endfor %}
+
+{% endblock %}

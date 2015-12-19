@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% load bootstrap3 %}
+{% block main %}
+
+<form action="{% url 'accounts:login' %}" method="post">
+  {% csrf_token %}
+  <div class="col-xs-3">
+    {% bootstrap_form form %}
+    {% bootstrap_button content="login" button_type="submit" %}
+    <input type="hidden" name="next" value="{% url 'blog:admin' %}" />
+  </div>
+
+</form>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'management/base.html' %}
+
+
+{% load bootstrap3 %}
+{% block admin %}
+
+<div id="post-list">
+
+
+{% url 'blog:post_create' as post_create_url %}
+{% bootstrap_button content="Create a new post" href=post_create_url button_class="btn btn-info" %}
+
+
+<h3>Post list</h3>
+
+<ul>
+  {% for post in object_list %}
+    <li>
+      <a href='{{ post.get_absolute_url }}edit/'>{{ post.title }}</a>
+    </li>
+  {% endfor %}
+</ul>
+
+</div>
+
+{% endblock %}

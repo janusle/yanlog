@@ -16,25 +16,37 @@ class IndexView(ListView):
     model = Post
 
     def dispatch(self, request, *args, **kwargs):
-        tag = self.request.GET.get('tag', None)
-        year = self.request.GET.get('year', None)
-        if tag:
-            self.tag = tag
-        if year:
-            self.year = year
+        self.tag = self.request.GET.get('tag', None)
+        self.year = self.request.GET.get('year', None)
         return super(IndexView, self).dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
         queryset = super(IndexView, self).get_queryset()
-        if hasattr(self, 'tag'):
+        if self.tag:
             queryset = queryset.filter(tags__name=self.tag)
-        if hasattr(self, 'year'):
+        if self.year:
             queryset = queryset.filter(created_at__year=self.year)
         return queryset
 
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
+        context.update({
+            'tag': self.tag,
+            'year': self.year,
+        })
+        return context
 
-class AdminView(CommonLoginRequiredMixin, IndexView):
-    template_name = 'admin.html'
+
+class PostAdminView(CommonLoginRequiredMixin, ListView):
+    model = Post
+    template_name = 'management/post.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(PostAdminView, self).get_context_data(**kwargs)
+        context.update({
+            'post_management': True,
+        })
+        return context
 
 
 class PostView(DetailView):
@@ -44,7 +56,7 @@ class PostView(DetailView):
 
 class PostEditView(CommonLoginRequiredMixin):
     model = Post
-    fields = ['title', 'content', 'created_at', 'tags']
+    fields = ['title', 'created_at', 'content', 'tags']
     template_name = 'post/post_create_edit.html'
 
     def get_form(self, form_class=None):
