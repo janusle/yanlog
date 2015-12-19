@@ -4,27 +4,17 @@
 
 
 <div class="container">
+  <h2>Post Management</h2>
 
   <div class="row">
+    <ul>
     {% for post in object_list %}
-    <article>
-      <header class="page-header">
-        <h1>{{ post.title }}</h1>
-      </header>
-      <div class="panel">
-        <div class="panel-body">
-          <span class="published_at">
-            <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-            <time>{{ post.created_at }}</time>
-          </span>
-          <a href="{{ post.get_absolute_url }}edit/" >Edit</a>
-        </div>
-      </div> <!-- panel -->
-  </article>
-
-  {% endfor %}
-
-</div>
+      <li>
+        <a href='{{ post.get_absolute_url }}edit/'>{{ post.title }}</a>
+      </li>
+    {% endfor %}
+    </ul>
+  </div>
 
 </div>
 {% endblock %}

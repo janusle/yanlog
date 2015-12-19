@@ -16,25 +16,33 @@ class IndexView(ListView):
     model = Post
 
     def dispatch(self, request, *args, **kwargs):
-        tag = self.request.GET.get('tag', None)
-        year = self.request.GET.get('year', None)
-        if tag:
-            self.tag = tag
-        if year:
-            self.year = year
+        self.tag = self.request.GET.get('tag', None)
+        self.year = self.request.GET.get('year', None)
         return super(IndexView, self).dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
         queryset = super(IndexView, self).get_queryset()
-        if hasattr(self, 'tag'):
+        if self.tag:
             queryset = queryset.filter(tags__name=self.tag)
-        if hasattr(self, 'year'):
+        if self.year:
             queryset = queryset.filter(created_at__year=self.year)
         return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
+        context.update({
+            'tag': self.tag,
+            'year': self.year,
+        })
+        return context
 
 
 class AdminView(CommonLoginRequiredMixin, IndexView):
     template_name = 'admin.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(AdminView, self).get_context_data(**kwargs)
+        return context
 
 
 class PostView(DetailView):
