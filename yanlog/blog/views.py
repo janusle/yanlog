@@ -4,6 +4,7 @@ from django.db.models import Count
 from django.utils import timezone
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   TemplateView, UpdateView)
+from django.http import JsonResponse
 
 from common.mixin import CommonLoginRequiredMixin
 
@@ -63,7 +64,7 @@ class PostAdminView(CommonLoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(PostAdminView, self).get_context_data(**kwargs)
         context.update({
-            'post_management': True,
+            'post_management': True, # It's for setting 'active' in top nav bar
         })
         return context
 
@@ -107,3 +108,28 @@ class PostDeleteView(CommonLoginRequiredMixin, DeleteView):
     model = Post
     template_name = 'post/post_confirm_delete.html'
     success_url = reverse_lazy('blog:admin')
+
+
+class TagAdminView(CommonLoginRequiredMixin, ListView):
+    model = Tag
+    template_name = 'management/tag.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(TagAdminView, self).get_context_data(**kwargs)
+        context.update({
+            'tag_management': True,  # It's for setting 'active' in top nav bar
+        })
+        return context
+
+
+class TagDeleteView(CommonLoginRequiredMixin, DeleteView):
+    """ This modified DeleteView just allows methods post and delete.
+        It's used to handle ajax call to remove tags.
+    """
+    model = Tag
+    http_method_names = [u'post', u'delete']
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.delete()
+        return JsonResponse({'result': 'OK'})
