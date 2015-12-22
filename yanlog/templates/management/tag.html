@@ -1,0 +1,24 @@
+{% extends 'management/base.html' %}
+
+
+{% load bootstrap3 %}
+{% block admin %}
+
+<div id="tag-list">
+
+
+<h3>Tag list</h3>
+
+<ul>
+  {% for tag in object_list %}
+    <li>
+      {{ tag.name }}
+      <a href="#" class="tag-edit">Edit</a>
+      <a href="#" class="tag-remove">Delete</a>
+    </li>
+  {% endfor %}
+</ul>
+
+</div>
+
+{% endblock %}
