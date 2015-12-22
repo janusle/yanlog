@@ -37,6 +37,25 @@ class IndexView(ListView):
         return context
 
 
+class ArchiveView(TemplateView):
+    template_name = 'archive.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ArchiveView, self).get_context_data(**kwargs)
+        tags = (Tag.objects
+                   .annotate(num_posts=Count('post'))
+                   .values('name', 'num_posts'))
+        years = (Post.objects
+                     .extra(select={'year': 'to_char(created_at, \'YYYY\')'})
+                     .values('year').order_by('year')
+                     .annotate(num_posts=Count('id')))
+        context.update({
+            'tags': tags,
+            'years': years,
+        })
+        return context
+
+
 class PostAdminView(CommonLoginRequiredMixin, ListView):
     model = Post
     template_name = 'management/post.html'
@@ -88,22 +107,3 @@ class PostDeleteView(CommonLoginRequiredMixin, DeleteView):
     model = Post
     template_name = 'post/post_confirm_delete.html'
     success_url = reverse_lazy('blog:admin')
-
-
-class ArchiveView(TemplateView):
-    template_name = 'archive.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(ArchiveView, self).get_context_data(**kwargs)
-        tags = (Tag.objects
-                   .annotate(num_posts=Count('post'))
-                   .values('name', 'num_posts'))
-        years = (Post.objects
-                     .extra(select={'year': 'to_char(created_at, \'YYYY\')'})
-                     .values('year').order_by('year')
-                     .annotate(num_posts=Count('id')))
-        context.update({
-            'tags': tags,
-            'years': years,
-        })
-        return context

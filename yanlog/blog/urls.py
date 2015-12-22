@@ -1,4 +1,5 @@
 from django.conf.urls import url
+from django.contrib.auth import views as auth_views
 
 from . import views
 
@@ -6,6 +7,9 @@ urlpatterns = [
     url(r'^$',
         views.IndexView.as_view(),
         name='index'),
+    url(r'^login/$', auth_views.login,
+        {'template_name': 'login.html'},
+        name='login'),
     url(r'^post/(?P<pk>[0-9]+)/$',
         views.PostView.as_view(),
         name='post'),

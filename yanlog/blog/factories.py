@@ -1,4 +1,5 @@
 import factory
+from django.contrib.auth.models import User
 
 from . import models
 
@@ -26,3 +27,8 @@ class PostFactory(factory.DjangoModelFactory):
         if extracted:
             for tag in extracted:
                 self.tags.add(tag)
+
+
+class UserFactory(factory.DjangoModelFactory):
+    class Meta:
+        model = User
