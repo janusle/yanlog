@@ -1,10 +1,10 @@
 from django import forms
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import Count
+from django.http import JsonResponse
 from django.utils import timezone
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   TemplateView, UpdateView)
-from django.http import JsonResponse
 
 from common.mixin import CommonLoginRequiredMixin
 
@@ -64,7 +64,7 @@ class PostAdminView(CommonLoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(PostAdminView, self).get_context_data(**kwargs)
         context.update({
-            'post_management': True, # It's for setting 'active' in top nav bar
+            'post_management': True,  # for setting 'active' in top nav bar
         })
         return context
 
