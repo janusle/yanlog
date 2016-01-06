@@ -20,7 +20,7 @@ class BlogTestCase(TestCase):
         self.tag1 = TagFactory()
         self.tag2 = TagFactory()
         # Create posts
-        self.post1 = PostFactory(tags=(self.tag1,))
+        self.post1 = PostFactory(tags=(self.tag1,), created_at=timezone.now())
         created_at = timezone.now() - timedelta(days=500)
         self.post2 = PostFactory(tags=(self.tag2,), created_at=created_at)
 
