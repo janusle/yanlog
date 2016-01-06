@@ -9,12 +9,15 @@
 
 <h3>Tag list</h3>
 
+{% url 'blog:tag_create' as tag_create_url %}
+{% bootstrap_button content="Create a new post" href=tag_create_url button_class="btn btn-info" %}
+
 <ul>
   {% for tag in object_list %}
     <li>
       {{ tag.name }}
-      <a href="#" class="tag-edit">Edit</a>
-      <a href="#" class="tag-remove">Delete</a>
+      <a href="{% url 'blog:tag_edit' tag.id %}" class="tag-edit">Edit</a>
+      <a href="{% url 'blog:tag_delete' tag.id %}" class="tag-remove">Delete</a>
     </li>
   {% endfor %}
 </ul>

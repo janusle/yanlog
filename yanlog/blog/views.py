@@ -122,6 +122,19 @@ class TagAdminView(CommonLoginRequiredMixin, ListView):
         return context
 
 
+class TagEditView(CommonLoginRequiredMixin):
+    model = Tag
+    http_method_names = [u'post']
+
+
+class TagCreateView(CommonLoginRequiredMixin, CreateView):
+    pass
+
+
+class TagUpdateView(CommonLoginRequiredMixin, UpdateView):
+    pass
+
+
 class TagDeleteView(CommonLoginRequiredMixin, DeleteView):
     """ This modified DeleteView just allows methods post and delete.
         It's used to handle ajax call to remove tags.
