@@ -34,7 +34,7 @@ urlpatterns = [
     url(r'tag/(?P<pk>[0-9]+)/delete/$',
         views.TagDeleteView.as_view(),
         name='tag_delete'),
-    url(r'tag/(?P<pk>[0-9]+)/create/$',
+    url(r'tag/create/$',
         views.TagCreateView.as_view(),
         name='tag_create'),
     url(r'tag/(?P<pk>[0-9]+)/update/$',

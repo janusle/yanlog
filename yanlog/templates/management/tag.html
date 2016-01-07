@@ -6,8 +6,13 @@
 
 <div id="tag-list">
 
-{% url 'blog:tag_create' as tag_create_url %}
-{% bootstrap_button content="Create a new tag" href=tag_create_url button_class="btn btn-info" %}
+<form class="form-inline" action="{% url 'blog:tag_create' %}" method="post">
+  <div class="form-group">
+    {% csrf_token %}
+    <input type="text" class="form-control" placeholder="Tag name" name="name">
+    {% bootstrap_button content="Create a new tag" button_type="submit" button_class="btn btn-info" %}
+  </div>
+</form>
 
 <h3>Tag list</h3>
 
@@ -15,12 +20,39 @@
   {% for tag in object_list %}
     <li>
       {{ tag.name }}
-      <a href="{% url 'blog:tag_update' tag.id %}" class="tag-edit">Edit</a>
+      <a href="#" class="tag-edit" data-tag-name="{{ tag.name }}" data-toggle="modal" data-target=".tag-update-modal">Edit</a>
       <a href="{% url 'blog:tag_delete' tag.id %}" class="tag-remove">Delete</a>
     </li>
   {% endfor %}
 </ul>
 
 </div>
+
+<div class="modal tag-update-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-body">
+          {% csrf_token %}
+          <input type="text" class="form-control" placeholder="Tag name" name="name">
+      </div>
+      <div class="modal-footer">
+         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+         {% bootstrap_button content="Save" button_type="submit" button_class="btn btn-info" %}
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+
+<script>
+$(document).ready(function(){
+    $(".tag-edit").click(function(){
+       tag_name = $(this).data("tag-name");
+       $(".tag-update-modal input").val(tag_name);
+    });
+});
+</script>
 
 {% endblock %}

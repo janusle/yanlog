@@ -125,13 +125,15 @@ class TagAdminView(CommonLoginRequiredMixin, ListView):
 class TagEditView(CommonLoginRequiredMixin):
     model = Tag
     http_method_names = [u'post']
+    success_url = reverse_lazy('blog:tag_admin')
+    fields = ['name']
 
 
-class TagCreateView(CommonLoginRequiredMixin, CreateView):
+class TagCreateView(TagEditView, CreateView):
     pass
 
 
-class TagUpdateView(CommonLoginRequiredMixin, UpdateView):
+class TagUpdateView(TagEditView, UpdateView):
     pass
 
 
