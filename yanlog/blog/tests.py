@@ -3,10 +3,9 @@ from datetime import timedelta
 from django.test import TestCase
 from django.utils import timezone
 
-from accounts.factories import UserFactory
 from blog.models import Post
 
-from .factories import PostFactory, TagFactory
+from .factories import PostFactory, TagFactory, UserFactory
 
 
 class BlogTestCase(TestCase):
@@ -21,7 +20,7 @@ class BlogTestCase(TestCase):
         self.tag1 = TagFactory()
         self.tag2 = TagFactory()
         # Create posts
-        self.post1 = PostFactory(tags=(self.tag1,))
+        self.post1 = PostFactory(tags=(self.tag1,), created_at=timezone.now())
         created_at = timezone.now() - timedelta(days=500)
         self.post2 = PostFactory(tags=(self.tag2,), created_at=created_at)
 
@@ -59,7 +58,7 @@ class BlogTestCase(TestCase):
         """Test create a post without login"""
         response = self.client.get('/blog/post/create/',
                                    follow=True)
-        redirect_to = '/accounts/login/?next=/blog/post/create/'
+        redirect_to = '/blog/login/?next=/blog/post/create/'
         self.assertRedirects(response, redirect_to)
 
     def test_create_post(self):
@@ -91,7 +90,7 @@ class BlogTestCase(TestCase):
         """Test edit a post without login"""
         response = self.client.get('/blog/post/%s/edit/' % self.post1.id,
                                    follow=True)
-        redirect_to = '/accounts/login/?next=/blog/post/%s/edit/' %\
+        redirect_to = '/blog/login/?next=/blog/post/%s/edit/' %\
             self.post1.id
         self.assertRedirects(response, redirect_to)
 
@@ -122,7 +121,7 @@ class BlogTestCase(TestCase):
         """Test delete a post without login"""
         response = self.client.get('/blog/post/%s/delete/' % self.post1.id,
                                    follow=True)
-        redirect_to = '/accounts/login/?next=/blog/post/%s/delete/' %\
+        redirect_to = '/blog/login/?next=/blog/post/%s/delete/' %\
             self.post1.id
         self.assertRedirects(response, redirect_to)
 

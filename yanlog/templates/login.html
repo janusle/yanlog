@@ -3,7 +3,7 @@
 {% load bootstrap3 %}
 {% block main %}
 
-<form action="{% url 'accounts:login' %}" method="post">
+<form action="{% url 'blog:login' %}" method="post">
   {% csrf_token %}
   <div class="col-xs-3">
     {% bootstrap_form form %}

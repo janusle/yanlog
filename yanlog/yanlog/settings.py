@@ -42,7 +42,6 @@ class Base(cbs.BaseSettings):
         'bootstrap3',
 
         # Local apps
-        'accounts',
         'common',
         'blog',
         'lettuce.django',

@@ -37,6 +37,25 @@ class IndexView(ListView):
         return context
 
 
+class ArchiveView(TemplateView):
+    template_name = 'archive.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ArchiveView, self).get_context_data(**kwargs)
+        tags = (Tag.objects
+                   .annotate(num_posts=Count('post'))
+                   .values('name', 'num_posts'))
+        years = (Post.objects
+                     .extra(select={'year': 'to_char(created_at, \'YYYY\')'})
+                     .values('year').order_by('year')
+                     .annotate(num_posts=Count('id')))
+        context.update({
+            'tags': tags,
+            'years': years,
+        })
+        return context
+
+
 class PostAdminView(CommonLoginRequiredMixin, ListView):
     model = Post
     template_name = 'management/post.html'
@@ -44,7 +63,7 @@ class PostAdminView(CommonLoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(PostAdminView, self).get_context_data(**kwargs)
         context.update({
-            'post_management': True,
+            'post_management': True,  # for setting 'active' in top nav bar
         })
         return context
 
@@ -90,20 +109,35 @@ class PostDeleteView(CommonLoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('blog:admin')
 
 
-class ArchiveView(TemplateView):
-    template_name = 'archive.html'
+class TagAdminView(CommonLoginRequiredMixin, ListView):
+    model = Tag
+    template_name = 'management/tag.html'
 
     def get_context_data(self, **kwargs):
-        context = super(ArchiveView, self).get_context_data(**kwargs)
-        tags = (Tag.objects
-                   .annotate(num_posts=Count('post'))
-                   .values('name', 'num_posts'))
-        years = (Post.objects
-                     .extra(select={'year': 'to_char(created_at, \'YYYY\')'})
-                     .values('year').order_by('year')
-                     .annotate(num_posts=Count('id')))
+        context = super(TagAdminView, self).get_context_data(**kwargs)
         context.update({
-            'tags': tags,
-            'years': years,
+            'tag_management': True,  # It's for setting 'active' in top nav bar
         })
         return context
+
+
+class TagCUDBaseView(CommonLoginRequiredMixin):
+    """
+    BaseView for create, update and delete tag
+    """
+    model = Tag
+    http_method_names = [u'post']
+    success_url = reverse_lazy('blog:tag_admin')
+    fields = ['name']
+
+
+class TagCreateView(TagCUDBaseView, CreateView):
+    pass
+
+
+class TagUpdateView(TagCUDBaseView, UpdateView):
+    pass
+
+
+class TagDeleteView(TagCUDBaseView, DeleteView):
+    http_method_names = [u'post', u'delete']
