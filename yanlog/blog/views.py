@@ -122,29 +122,23 @@ class TagAdminView(CommonLoginRequiredMixin, ListView):
         return context
 
 
-class TagEditView(CommonLoginRequiredMixin):
+class TagCUDBaseView(CommonLoginRequiredMixin):
+    """
+    BaseView for create, update and delete tag
+    """
     model = Tag
     http_method_names = [u'post']
     success_url = reverse_lazy('blog:tag_admin')
     fields = ['name']
 
 
-class TagCreateView(TagEditView, CreateView):
+class TagCreateView(TagCUDBaseView, CreateView):
     pass
 
 
-class TagUpdateView(TagEditView, UpdateView):
+class TagUpdateView(TagCUDBaseView, UpdateView):
     pass
 
 
-class TagDeleteView(CommonLoginRequiredMixin, DeleteView):
-    """ This modified DeleteView just allows methods post and delete.
-        It's used to handle ajax call to remove tags.
-    """
-    model = Tag
+class TagDeleteView(TagCUDBaseView, DeleteView):
     http_method_names = [u'post', u'delete']
-
-    def delete(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        self.object.delete()
-        return JsonResponse({'result': 'OK'})

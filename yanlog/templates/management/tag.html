@@ -20,8 +20,8 @@
   {% for tag in object_list %}
     <li>
       {{ tag.name }}
-      <a href="#" class="tag-edit" data-tag-name="{{ tag.name }}" data-toggle="modal" data-target=".tag-update-modal">Edit</a>
-      <a href="{% url 'blog:tag_delete' tag.id %}" class="tag-remove">Delete</a>
+      <a href="#" class="tag-edit" data-tag-id="{{ tag.id }}" data-tag-name="{{ tag.name }}" data-toggle="modal" data-target=".tag-update-modal">Edit</a>
+      <a href="#" class="tag-remove" data-tag-id="{{ tag.id }}" data-tag-name="{{ tag.name }}" data-toggle="modal" data-target=".tag-remove-modal">Delete</a>
     </li>
   {% endfor %}
 </ul>
@@ -30,27 +30,54 @@
 
 <div class="modal tag-update-modal" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-sm">
-    <div class="modal-content">
-      <div class="modal-body">
-          {% csrf_token %}
-          <input type="text" class="form-control" placeholder="Tag name" name="name">
+    <form method="post">
+      <div class="modal-content">
+        <div class="modal-body">
+            {% csrf_token %}
+            <input type="text" class="form-control" placeholder="Tag name" name="name">
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            {% bootstrap_button content="Save" button_type="submit" button_class="btn btn-info tag-update-save" %}
+        </div>
       </div>
-      <div class="modal-footer">
-         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-         {% bootstrap_button content="Save" button_type="submit" button_class="btn btn-info" %}
-      </div>
-    </div>
-
-
+    </form>
   </div>
 </div>
 
+<div class="modal tag-remove-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm">
+    <form method="post">
+       <div class="modal-content">
+         <div class="modal-body">
+           {% csrf_token %}
+           <p></p>
+         </div>
+
+         <div class="modal-footer">
+           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+           {% bootstrap_button content="Confirm" button_type="submit" button_class="btn btn-info tag-remove-save" %}
+         </div>
+
+       </div>
+    </form>
+  </div>
+</div>
 
 <script>
 $(document).ready(function(){
     $(".tag-edit").click(function(){
        tag_name = $(this).data("tag-name");
-       $(".tag-update-modal input").val(tag_name);
+       tag_id = $(this).data("tag-id");
+       $(".tag-update-modal input[name=name]").val(tag_name);
+       $(".tag-update-modal form").prop("action", "/blog/tag/" + tag_id + "/update/");
+    });
+
+    $(".tag-remove").click(function(){
+       tag_name = $(this).data("tag-name");
+       tag_id = $(this).data("tag-id");
+       $(".tag-remove-modal p").text("Are you sure you want to delete tag" + tag_name + "?");
+       $(".tag-remove-modal form").prop("action", "/blog/tag/" + tag_id + "/delete/");
     });
 });
 </script>
