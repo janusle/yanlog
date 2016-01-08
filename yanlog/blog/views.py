@@ -1,7 +1,6 @@
 from django import forms
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import Count
-from django.http import JsonResponse
 from django.utils import timezone
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   TemplateView, UpdateView)
