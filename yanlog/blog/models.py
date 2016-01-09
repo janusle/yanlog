@@ -27,4 +27,5 @@ class Tag(models.Model):
 
 
 class Setting(models.Model):
-    blog_title = models.CharField(max_length=50)
+    blog_title = models.CharField(max_length=50, blank=True, null=True)
+    blog_author = models.CharField(max_length=50, blank=True, null=True)

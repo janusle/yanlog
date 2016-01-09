@@ -185,7 +185,7 @@ class BlogAdminView(BaseAdminView, UpdateView):
     General blog settings
     """
     model = Setting
-    fields = ['blog_title', ]
+    fields = ['blog_title', 'blog_author', ]
     success_url = reverse_lazy('blog:admin')
     template_name = 'management/blog.html'
 

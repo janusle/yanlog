@@ -23,6 +23,7 @@ def blog_settings(request):
     '''
     setting = Setting.objects.first()
     if setting is None:
-        setting = Setting.objects.create(blog_title='')
+        setting = Setting.objects.create()
 
-    return {'blog_title': setting.blog_title}
+    return {'blog_title': setting.blog_title,
+            'blog_author': setting.blog_author, }
