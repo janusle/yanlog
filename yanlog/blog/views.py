@@ -7,13 +7,13 @@ from django.utils import timezone
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   TemplateView, UpdateView)
 
-from common.mixin import CommonLoginRequiredMixin
+from common.mixin import CommonLoginRequiredMixin, LoadSettingsMixin
 
-from .models import Post, Tag
+from .models import Post, Tag, Setting
 from .utils import MarkdownTextAreaWidget
 
 
-class IndexView(ListView):
+class IndexView(LoadSettingsMixin, ListView):
     template_name = "index.html"
     model = Post
 
@@ -39,7 +39,7 @@ class IndexView(ListView):
         return context
 
 
-class ArchiveView(TemplateView):
+class ArchiveView(LoadSettingsMixin, TemplateView):
     template_name = 'archive.html'
 
     def get_context_data(self, **kwargs):
@@ -58,24 +58,28 @@ class ArchiveView(TemplateView):
         return context
 
 
-class PostAdminView(CommonLoginRequiredMixin, ListView):
+class PostView(LoadSettingsMixin, DetailView):
+    model = Post
+    template_name = 'post/post.html'
+
+
+class BaseAdminView(LoadSettingsMixin, CommonLoginRequiredMixin):
+    pass
+
+
+class PostAdminView(BaseAdminView, ListView):
     model = Post
     template_name = 'management/post.html'
 
     def get_context_data(self, **kwargs):
         context = super(PostAdminView, self).get_context_data(**kwargs)
         context.update({
-            'post_management': True,  # for setting 'active' in top nav bar
+            'post_admin': True,  # for setting 'active' in top nav bar
         })
         return context
 
 
-class PostView(DetailView):
-    model = Post
-    template_name = 'post/post.html'
-
-
-class PostEditView(CommonLoginRequiredMixin):
+class PostEditView(BaseAdminView):
     model = Post
     fields = ['title', 'created_at', 'content', 'tags']
     template_name = 'post/post_create_edit.html'
@@ -105,25 +109,25 @@ class PostUpdateView(PostEditView, UpdateView):
     action = 'Save'
 
 
-class PostDeleteView(CommonLoginRequiredMixin, DeleteView):
+class PostDeleteView(BaseAdminView, DeleteView):
     model = Post
     template_name = 'post/post_confirm_delete.html'
     success_url = reverse_lazy('blog:admin')
 
 
-class TagAdminView(CommonLoginRequiredMixin, ListView):
+class TagAdminView(BaseAdminView, ListView):
     model = Tag
     template_name = 'management/tag.html'
 
     def get_context_data(self, **kwargs):
         context = super(TagAdminView, self).get_context_data(**kwargs)
         context.update({
-            'tag_management': True,  # It's for setting 'active' in top nav bar
+            'tag_admin': True,  # It's for setting 'active' in top nav bar
         })
         return context
 
 
-class TagCUDBaseView(CommonLoginRequiredMixin):
+class TagCUDBaseView(BaseAdminView):
     """
     BaseView for creating, updating and deleting tag
     """
@@ -145,9 +149,9 @@ class TagDeleteView(TagCUDBaseView, DeleteView):
     http_method_names = [u'post', u'delete']
 
 
-class AboutUpdateView(CommonLoginRequiredMixin, UpdateView):
+class AboutUpdateView(BaseAdminView, UpdateView):
     model = FlatPage
-    fields = ['content']
+    fields = ['content',]
     template_name = 'management/about.html'
     success_url = reverse_lazy('blog:about_admin')
 
@@ -165,7 +169,7 @@ class AboutUpdateView(CommonLoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super(AboutUpdateView, self).get_context_data(**kwargs)
         context.update({
-            'about_management': True,  # for setting 'active' in top nav bar
+            'about_admin': True,  # for setting 'active' in top nav bar
         })
         return context
 
@@ -174,3 +178,32 @@ class AboutUpdateView(CommonLoginRequiredMixin, UpdateView):
         # Make UpdateView always edit 'about' page
         self.kwargs[self.pk_url_kwarg] = about.id
         return super(AboutUpdateView, self).get_object(queryset)
+
+
+class BlogAdminView(BaseAdminView, UpdateView):
+    """
+    General blog settings
+    """
+    model = Setting
+    fields = ['blog_title',]
+    success_url = reverse_lazy('blog:admin')
+    template_name = 'management/blog.html'
+
+    def post(self, request, *args, **kwargs):
+        # Add the flash message
+        messages.success(request, "Settings updated.")
+        return super(BlogAdminView, self).post(request, *args, **kwargs)
+
+    def get_object(self, queryset=None):
+        setting = Setting.objects.first()
+        if setting is None:
+            setting = Setting.objects.create(blog_title='')
+        self.kwargs[self.pk_url_kwarg] = setting.id
+        return super(BlogAdminView, self).get_object(queryset)
+
+    def get_context_data(self, **kwargs):
+        context = super(BlogAdminView, self).get_context_data(**kwargs)
+        context.update({
+            'blog_admin': True,  # for setting 'active' in top nav bar
+        })
+        return context

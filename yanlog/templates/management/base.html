@@ -4,9 +4,10 @@
 
 <div class="admin-nav-bar">
   <ul class="nav nav-tabs">
-    <li {% if post_management %} class="active" {% endif %}><a href="{% url 'blog:admin' %}">Post Management</a></li>
-    <li {% if tag_management %} class="active" {% endif %}><a href="{% url 'blog:tag_admin' %}">Tag Management</a></li>
-    <li {% if about_management %} class="active" {% endif %}><a href="{% url 'blog:about_admin' %}">About</a></li>
+    <li {% if blog_admin %} class="active" {% endif %}><a href="{% url 'blog:admin' %}">General</a></li>
+    <li {% if post_admin %} class="active" {% endif %}><a href="{% url 'blog:post_admin' %}">Post</a></li>
+    <li {% if tag_admin %} class="active" {% endif %}><a href="{% url 'blog:tag_admin' %}">Tag</a></li>
+    <li {% if about_admin %} class="active" {% endif %}><a href="{% url 'blog:about_admin' %}">About</a></li>
   </ul>
 </div>
 
