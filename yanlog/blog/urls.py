@@ -40,4 +40,7 @@ urlpatterns = [
     url(r'tag/(?P<pk>[0-9]+)/update/$',
         views.TagUpdateView.as_view(),
         name='tag_update'),
+    url(r'about/admin/$',
+        views.AboutUpdateView.as_view(),
+        name='about_admin')
 ]

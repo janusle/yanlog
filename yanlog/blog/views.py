@@ -1,6 +1,7 @@
 from django import forms
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import Count
+from django.contrib.flatpages.models import FlatPage
 from django.utils import timezone
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   TemplateView, UpdateView)
@@ -123,7 +124,7 @@ class TagAdminView(CommonLoginRequiredMixin, ListView):
 
 class TagCUDBaseView(CommonLoginRequiredMixin):
     """
-    BaseView for create, update and delete tag
+    BaseView for creating, updating and deleting tag
     """
     model = Tag
     http_method_names = [u'post']
@@ -141,3 +142,29 @@ class TagUpdateView(TagCUDBaseView, UpdateView):
 
 class TagDeleteView(TagCUDBaseView, DeleteView):
     http_method_names = [u'post', u'delete']
+
+
+class AboutUpdateView(CommonLoginRequiredMixin, UpdateView):
+    model = FlatPage
+    fields = ['content']
+    template_name = 'management/about.html'
+    success_url = reverse_lazy('blog:about_admin')
+
+    def get_form(self, form_class=None):
+        form = super(AboutUpdateView, self).get_form(form_class)
+        form.fields['content'] = forms.fields.CharField(
+            widget=MarkdownTextAreaWidget)
+        return form
+
+    def get_context_data(self, **kwargs):
+        context = super(AboutUpdateView, self).get_context_data(**kwargs)
+        context.update({
+            'about_management': True,  # It's for setting 'active' in top nav bar
+        })
+        return context
+
+    def get_object(self, queryset=None):
+        about, _ = FlatPage.objects.get_or_create(title='about', url='/about/')
+        # Make UpdateView always edit 'about' page
+        self.kwargs[self.pk_url_kwarg] = about.id
+        return super(AboutUpdateView, self).get_object(queryset)
