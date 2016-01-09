@@ -1,6 +1,8 @@
 from django import forms
 from django.utils.safestring import mark_safe
 
+from blog.models import Setting
+
 
 class MarkdownTextAreaWidget(forms.widgets.Textarea):
     def render(self, name, value, attrs=None):
@@ -13,3 +15,14 @@ class MarkdownTextAreaWidget(forms.widgets.Textarea):
                    .render(name, value, attrs))
         # add a container for EpicEditor
         return mark_safe("<div id='content_editor'></div>%s" % ta_html)
+
+
+def blog_settings(request):
+    '''
+    Context processor adding blog settings
+    '''
+    setting = Setting.objects.first()
+    if setting is None:
+        setting = Setting.objects.create(blog_title='')
+
+    return {'blog_title': setting.blog_title}

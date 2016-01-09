@@ -7,13 +7,13 @@ from django.utils import timezone
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   TemplateView, UpdateView)
 
-from common.mixin import CommonLoginRequiredMixin, LoadSettingsMixin
+from common.mixin import CommonLoginRequiredMixin
 
 from .models import Post, Setting, Tag
 from .utils import MarkdownTextAreaWidget
 
 
-class IndexView(LoadSettingsMixin, ListView):
+class IndexView(ListView):
     template_name = "index.html"
     model = Post
 
@@ -39,7 +39,7 @@ class IndexView(LoadSettingsMixin, ListView):
         return context
 
 
-class ArchiveView(LoadSettingsMixin, TemplateView):
+class ArchiveView(TemplateView):
     template_name = 'archive.html'
 
     def get_context_data(self, **kwargs):
@@ -58,12 +58,12 @@ class ArchiveView(LoadSettingsMixin, TemplateView):
         return context
 
 
-class PostView(LoadSettingsMixin, DetailView):
+class PostView(DetailView):
     model = Post
     template_name = 'post/post.html'
 
 
-class BaseAdminView(LoadSettingsMixin, CommonLoginRequiredMixin):
+class BaseAdminView(CommonLoginRequiredMixin):
     pass
 
 

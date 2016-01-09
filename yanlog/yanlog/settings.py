@@ -57,6 +57,7 @@ class Base(cbs.BaseSettings):
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
         'django.middleware.security.SecurityMiddleware',
+        'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     )
 
     ROOT_URLCONF = 'yanlog.urls'
@@ -72,6 +73,7 @@ class Base(cbs.BaseSettings):
                     'django.template.context_processors.request',
                     'django.contrib.auth.context_processors.auth',
                     'django.contrib.messages.context_processors.messages',
+                    'blog.utils.blog_settings',
                 ],
             },
         },
