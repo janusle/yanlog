@@ -1,8 +1,8 @@
 from django import forms
-from django.core.urlresolvers import reverse_lazy
 from django.contrib import messages
-from django.db.models import Count
 from django.contrib.flatpages.models import FlatPage
+from django.core.urlresolvers import reverse_lazy
+from django.db.models import Count
 from django.utils import timezone
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   TemplateView, UpdateView)
@@ -165,7 +165,7 @@ class AboutUpdateView(CommonLoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super(AboutUpdateView, self).get_context_data(**kwargs)
         context.update({
-            'about_management': True,  # It's for setting 'active' in top nav bar
+            'about_management': True,  # for setting 'active' in top nav bar
         })
         return context
 
