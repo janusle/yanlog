@@ -9,7 +9,7 @@ from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
 
 from common.mixin import CommonLoginRequiredMixin, LoadSettingsMixin
 
-from .models import Post, Tag, Setting
+from .models import Post, Setting, Tag
 from .utils import MarkdownTextAreaWidget
 
 
@@ -112,7 +112,7 @@ class PostUpdateView(PostEditView, UpdateView):
 class PostDeleteView(BaseAdminView, DeleteView):
     model = Post
     template_name = 'post/post_confirm_delete.html'
-    success_url = reverse_lazy('blog:admin')
+    success_url = reverse_lazy('blog:post_admin')
 
 
 class TagAdminView(BaseAdminView, ListView):
@@ -151,7 +151,7 @@ class TagDeleteView(TagCUDBaseView, DeleteView):
 
 class AboutUpdateView(BaseAdminView, UpdateView):
     model = FlatPage
-    fields = ['content',]
+    fields = ['content', ]
     template_name = 'management/about.html'
     success_url = reverse_lazy('blog:about_admin')
 
@@ -185,7 +185,7 @@ class BlogAdminView(BaseAdminView, UpdateView):
     General blog settings
     """
     model = Setting
-    fields = ['blog_title',]
+    fields = ['blog_title', ]
     success_url = reverse_lazy('blog:admin')
     template_name = 'management/blog.html'
 
