@@ -14,13 +14,7 @@ div#blog-nav {
   margin-bottom: 15px;
 }
 
-#post-list {
-  margin-top: 15px;
-  margin-left: 15px;
-  margin-bottom: : 15px;
-}
-
-#tag-list {
+#blog-settings, #post-list, #tag-list, #about-editor{
   margin-top: 15px;
   margin-left: 15px;
   margin-bottom: : 15px;

@@ -131,7 +131,7 @@ class BlogTestCase(TestCase):
                           password=self.user_password)
         response = self.client.post('/blog/post/%s/delete/' % self.post1.id,
                                     follow=True)
-        redirect_to = '/blog/admin/'
+        redirect_to = '/blog/post/admin/'
         self.assertRedirects(response, redirect_to)
         post = Post.objects.filter(id=self.post1.id)
         self.assertFalse(post)

@@ -24,3 +24,8 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Setting(models.Model):
+    blog_title = models.CharField(max_length=50, blank=True, null=True)
+    blog_author = models.CharField(max_length=50, blank=True, null=True)

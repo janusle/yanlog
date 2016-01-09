@@ -32,6 +32,7 @@
     virtualenv: /srv/www/{{ domain_name }}/venv
   with_items:
     - flatpages
+    - settings
   environment: django_environment
   when: is_web_node
 

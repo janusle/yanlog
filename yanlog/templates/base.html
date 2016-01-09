@@ -17,7 +17,7 @@
   <link href="/static/css/code_highlight.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   {% bootstrap_javascript %}
-  <title>Yanlog</title>
+  <title>{{ blog_title }}</title>
 </head>
 
 <body>
@@ -25,7 +25,7 @@
   <nav class="navbar navbar-default">
     <div class="container">
       <div class="navbar-header">
-        <a class="navbar-brand" href="/">Yan Le's blog</a>
+        <a class="navbar-brand" href="/">{{ blog_title }}</a>
       </div>
 
       <ul class="nav navbar-nav navbar-right">
@@ -60,7 +60,7 @@
       <hr/>
       <div class="row">
         <div class="col-md-8">
-          Copyright © 2015 - Yan Le
+          Copyright © {% now "Y" %} - {{ blog_author }}
         </div>
         <div class="col-md-4">
           <p class="pull-right">

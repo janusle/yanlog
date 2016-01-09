@@ -1,22 +1,23 @@
-{% extends 'base.html' %}
+{% extends 'management/base.html' %}
 
 {% load bootstrap3 %}
 {% load staticfiles %}
+{% block admin %}
 
-{% block main %}
+<div id="about-editor">
 
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-{{ message.level_tag }}">
+      {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
 
-<div id="blog-nav">
-<i class="fa fa-arrow-circle-left"></i>
-<a href="{% url 'blog:post_admin' %}">Back to post management</a>
-</div>
-
-<div id="post-editor">
 <form method="post">
   {% csrf_token %}
   {% bootstrap_form form %}
-  {% bootstrap_button content=action button_type="submit" button_class="btn btn-success" %}
-  {% bootstrap_button content="delete" href=post.get_absolute_url|add:"delete/" button_class="btn btn-danger" %}
+  {% bootstrap_button content="Save" button_type="submit" button_class="btn btn-success" %}
 </form>
 </div>
 

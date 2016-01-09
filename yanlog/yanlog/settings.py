@@ -26,6 +26,7 @@ class Base(cbs.BaseSettings):
     FIXTURE_DIRS = [os.path.join(BASE_DIR, 'fixtures'), ]
 
     ALLOWED_HOSTS = ['127.0.0.1', 'yanle.me']
+
     # Application definition
     INSTALLED_APPS = (
         'django.contrib.admin',
@@ -56,6 +57,7 @@ class Base(cbs.BaseSettings):
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
         'django.middleware.security.SecurityMiddleware',
+        'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     )
 
     ROOT_URLCONF = 'yanlog.urls'
@@ -71,6 +73,7 @@ class Base(cbs.BaseSettings):
                     'django.template.context_processors.request',
                     'django.contrib.auth.context_processors.auth',
                     'django.contrib.messages.context_processors.messages',
+                    'blog.utils.blog_settings',
                 ],
             },
         },
