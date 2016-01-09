@@ -26,6 +26,7 @@ class Base(cbs.BaseSettings):
     FIXTURE_DIRS = [os.path.join(BASE_DIR, 'fixtures'), ]
 
     ALLOWED_HOSTS = ['127.0.0.1', 'yanle.me']
+
     # Application definition
     INSTALLED_APPS = (
         'django.contrib.admin',

@@ -1,5 +1,6 @@
 from django import forms
 from django.core.urlresolvers import reverse_lazy
+from django.contrib import messages
 from django.db.models import Count
 from django.contrib.flatpages.models import FlatPage
 from django.utils import timezone
@@ -149,6 +150,11 @@ class AboutUpdateView(CommonLoginRequiredMixin, UpdateView):
     fields = ['content']
     template_name = 'management/about.html'
     success_url = reverse_lazy('blog:about_admin')
+
+    def post(self, request, *args, **kwargs):
+        # Add the flash message
+        messages.success(request, "About page updated.")
+        return super(AboutUpdateView, self).post(request, *args, **kwargs)
 
     def get_form(self, form_class=None):
         form = super(AboutUpdateView, self).get_form(form_class)

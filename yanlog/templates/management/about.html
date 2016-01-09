@@ -5,6 +5,15 @@
 {% block admin %}
 
 <div id="about-editor">
+
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-{{ message.level_tag }}">
+      {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
+
 <form method="post">
   {% csrf_token %}
   {% bootstrap_form form %}
