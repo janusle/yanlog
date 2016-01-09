@@ -15,8 +15,9 @@
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
   <link href="/static/css/style.css" rel="stylesheet">
   <link href="/static/css/code_highlight.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   {% bootstrap_javascript %}
-  <title>Yanlog</title>
+  <title>{{ blog_title }}</title>
 </head>
 
 <body>
@@ -24,7 +25,7 @@
   <nav class="navbar navbar-default">
     <div class="container">
       <div class="navbar-header">
-        <a class="navbar-brand" href="/">Yan Le's blog</a>
+        <a class="navbar-brand" href="/">{{ blog_title }}</a>
       </div>
 
       <ul class="nav navbar-nav navbar-right">
@@ -48,20 +49,22 @@
     </div>
   </nav> <!--header-->
 
-{% block main %}{% endblock %}
+  <div class="container">
+    <div class="row">
+       {% block main %}{% endblock %}
+    </div>
+  </div>
 
   <footer>
     <div class="container">
       <hr/>
       <div class="row">
         <div class="col-md-8">
-          Copyright © 2015 - Yan Le
+          Copyright © {% now "Y" %} - {{ blog_author }}
         </div>
-
         <div class="col-md-4">
           <p class="pull-right">
             Powered by <a href="https://github.com/janusle/yanlog">Yanlog</a>
-            <i class="fa fa-hand-peace-o"></i>
           </p>
         </div>
       </div>

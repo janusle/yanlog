@@ -30,6 +30,10 @@ create_superuser:
 # manage.py createsuperuser
 	${MANAGE} createsuperuser
 
+sp:
+# manage.py shell_plus
+	${MANAGE} shell_plus
+
 runserver:
 # manage.py runserver ${DJANGO_PORT}
 	envdir ${ENVDIR} ${MANAGE} runserver ${DJANGO_PORT}

@@ -26,6 +26,7 @@ class Base(cbs.BaseSettings):
     FIXTURE_DIRS = [os.path.join(BASE_DIR, 'fixtures'), ]
 
     ALLOWED_HOSTS = ['127.0.0.1', 'yanle.me']
+
     # Application definition
     INSTALLED_APPS = (
         'django.contrib.admin',
@@ -42,7 +43,6 @@ class Base(cbs.BaseSettings):
         'bootstrap3',
 
         # Local apps
-        'accounts',
         'common',
         'blog',
         'lettuce.django',
@@ -57,6 +57,7 @@ class Base(cbs.BaseSettings):
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
         'django.middleware.security.SecurityMiddleware',
+        'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     )
 
     ROOT_URLCONF = 'yanlog.urls'
@@ -64,7 +65,7 @@ class Base(cbs.BaseSettings):
     TEMPLATES = [
         {
             'BACKEND': 'django.template.backends.django.DjangoTemplates',
-            'DIRS': [],
+            'DIRS': [os.path.join(BASE_DIR, 'templates'), ],
             'APP_DIRS': True,
             'OPTIONS': {
                 'context_processors': [
@@ -72,6 +73,7 @@ class Base(cbs.BaseSettings):
                     'django.template.context_processors.request',
                     'django.contrib.auth.context_processors.auth',
                     'django.contrib.messages.context_processors.messages',
+                    'blog.utils.blog_settings',
                 ],
             },
         },
@@ -138,6 +140,11 @@ class Local(Base):
 
 class Test(Base):
     """ Settings for testing env """
+
+    @cbs.env
+    def DEFAULT_DB(self):
+        # Uses postgres started by docker-compose by default
+        return 'postgres://dev:dev@localhost:5434/yanlog'
 
     SECRET_KEY = 'ul06ndw!fop^owsfzx1x#zh)!%2scv!#!ox1e^9%rrz1&v^bf-'
 

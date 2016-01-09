@@ -1,0 +1,27 @@
+{% extends 'management/base.html' %}
+
+
+{% load bootstrap3 %}
+{% block admin %}
+
+<div id="blog-settings">
+
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-{{ message.level_tag }}">
+      {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
+
+
+<form method="post">
+  {% csrf_token %}
+  {% bootstrap_form form %}
+  {% bootstrap_button content='Save' button_type="submit" button_class="btn btn-success" %}
+</form>
+
+</div>
+
+
+{% endblock %}

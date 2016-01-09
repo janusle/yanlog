@@ -9,3 +9,13 @@
 body {
   font-size: 18px;
 }
+
+div#blog-nav {
+  margin-bottom: 15px;
+}
+
+#blog-settings, #post-list, #tag-list, #about-editor{
+  margin-top: 15px;
+  margin-left: 15px;
+  margin-bottom: : 15px;
+}

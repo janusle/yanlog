@@ -1,0 +1,10 @@
+[
+{
+  "model": "blog.setting",
+  "pk": 1,
+  "fields": {
+    "blog_title": "Yan Le's blog",
+    "blog_author": "Yan Le"
+  }
+}
+]

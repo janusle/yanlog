@@ -1,0 +1,40 @@
+{% extends 'management/base.html' %}
+
+{% load bootstrap3 %}
+{% load staticfiles %}
+{% block admin %}
+
+<div id="about-editor">
+
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-{{ message.level_tag }}">
+      {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
+
+<form method="post">
+  {% csrf_token %}
+  {% bootstrap_form form %}
+  {% bootstrap_button content="Save" button_type="submit" button_class="btn btn-success" %}
+</form>
+</div>
+
+<script src="{% static 'js/epiceditor.min.js' %}"></script>
+<script>
+  var opts = {
+    container: 'content_editor',
+    textarea: 'id_content',
+    basePath: '',
+    theme: {
+      base: '{% static "css/epiceditor/themes/base/epiceditor.css" %}',
+      preview: '{% static "css/epiceditor/themes/preview/preview-dark.css" %}',
+      editor: '{% static "css/epiceditor/themes/editor/epic-dark.css" %}'
+    },
+    clientSideStorage: false
+  }
+  var editor = new EpicEditor(opts).load();
+</script>
+
+{% endblock %}

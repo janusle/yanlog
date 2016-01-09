@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+
+{% load disqus_tags %}
+{% disqus_dev %}
+
+{% block main %}
+
+  {% include 'post/post_snippet.html' %}
+  {% disqus_show_comments %}
+
+{% endblock %}
