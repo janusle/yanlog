@@ -2,6 +2,13 @@
 
 {% block main %}
 
+{% if user.is_authenticated %}
+<div class="pull-right">
+  <i class="fa fa-sign-out"></i>
+  <a href="{% url 'blog:logout' %}">Logout</a>
+</div>
+{% endif %}
+
 <div class="admin-nav-bar">
   <ul class="nav nav-tabs">
     <li {% if blog_admin %} class="active" {% endif %}><a href="{% url 'blog:admin' %}">General</a></li>
