@@ -16,7 +16,7 @@ urlpatterns = [
         name='login'),
     url(r'^logout/$',
         auth_views.logout,
-        {'next_page':'blog:index'},
+        {'next_page': 'blog:index'},
         name='logout'),
     url(r'^admin/$',
         views.BlogAdminView.as_view(),
