@@ -1,5 +1,6 @@
 from datetime import timedelta
 
+from django.contrib.auth import authenticate
 from django.test import TestCase
 from django.utils import timezone
 
@@ -135,6 +136,58 @@ class BlogTestCase(TestCase):
         self.assertRedirects(response, redirect_to)
         post = Post.objects.filter(id=self.post1.id)
         self.assertFalse(post)
+
+    def test_change_password_without_login(self):
+        """Test change the password without login"""
+        response = self.client.get('/blog/account/admin/', follow=True)
+        # If the user is not login, hitting change password page will return
+        # 404 error rather than redirect to the login page.
+        self.assertEqual(response.status_code, 404)
+
+    def test_change_password(self):
+        """Test change the password"""
+        self.client.login(username=self.user.username,
+                          password=self.user_password)
+        response = self.client.get('/blog/account/admin/')
+        # Make sure the flash message doesn't show.
+        self.assertNotContains(response, 'updated')
+        new_pass = "new_password"
+        new_password = {
+            "new_password1": new_pass,
+            "new_password2": new_pass,
+        }
+        response = self.client.post('/blog/account/admin/',
+                                    new_password, follow=True)
+        self.assertRedirects(response, '/blog/account/admin/')
+        self.assertContains(response, 'updated')
+        result = authenticate(username=self.user.username, password=new_pass)
+        self.assertNotEqual(result, None)
+
+    def test_change_password_two_passwords_not_match(self):
+        """Test change password by inputing two different passwords"""
+        self.client.login(username=self.user.username,
+                          password=self.user_password)
+        new_password = {
+            "new_password1": "new_password1",
+            "new_password2": "new_password2",
+        }
+        response = self.client.post('/blog/account/admin/', new_password)
+        # Should get 200 rather than 301(redirect) as changing password
+        # was not successful.
+        self.assertEqual(response.status_code, 200)
+        # No flash displays.
+        self.assertNotContains(response, 'updated')
+        # Error message display on the new_password2 field.
+        self.assertFormError(response, 'form',
+                             'new_password2',
+                             'The two password fields didn\'t match.')
+        # Password should not be changed.
+        result = authenticate(username=self.user.username,
+                              password=new_password['new_password1'])
+        self.assertEqual(result, None)
+        result = authenticate(username=self.user.username,
+                              password=new_password['new_password2'])
+        self.assertEqual(result, None)
 
     def test_archive_page(self):
         """Test archive page"""
