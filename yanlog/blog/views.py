@@ -1,9 +1,15 @@
 from django import forms
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import SetPasswordForm
+from django.contrib.auth.views import deprecate_current_app, password_change
 from django.contrib.flatpages.models import FlatPage
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import Count
+from django.http import HttpResponseRedirect
 from django.utils import timezone
+from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   TemplateView, UpdateView)
 
@@ -207,3 +213,27 @@ class BlogAdminView(BaseAdminView, UpdateView):
             'blog_admin': True,  # for setting 'active' in top nav bar
         })
         return context
+
+
+@sensitive_post_parameters()
+@csrf_protect
+@login_required
+@deprecate_current_app
+def user_password_change(request,
+                         template_name='management/account.html',
+                         post_change_redirect='blog:account_admin',
+                         password_change_form=SetPasswordForm,
+                         extra_context=None):
+    """
+    Exact same as 'password_change' view but insert a flash message to
+    indicate a password change
+    """
+    tpl_response = password_change(request, template_name,
+                                   post_change_redirect, password_change_form,
+                                   extra_context)
+
+    # if tpl_response is HttpResponseRedirect, it means password has changed.
+    # if changing password was failed, TemplateResponse will be returned.
+    if isinstance(tpl_response, HttpResponseRedirect):
+        messages.success(request, "Password updated.")
+    return tpl_response

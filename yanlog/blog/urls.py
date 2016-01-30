@@ -50,5 +50,8 @@ urlpatterns = [
         name='tag_update'),
     url(r'about/admin/$',
         views.AboutUpdateView.as_view(),
-        name='about_admin')
+        name='about_admin'),
+    url(r'account/admin/$',
+        views.user_password_change,
+        name='account_admin'),
 ]
