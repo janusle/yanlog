@@ -232,7 +232,8 @@ def user_password_change(request,
                                    post_change_redirect, password_change_form,
                                    extra_context)
 
-    if (request.method == 'POST' and
-            isinstance(tpl_response, HttpResponseRedirect)):
+    # if tpl_response is HttpResponseRedirect, it means password has changed.
+    # if changing password was failed, TemplateResponse will be returned 
+    if isinstance(tpl_response, HttpResponseRedirect):
         messages.success(request, "Password updated.")
     return tpl_response
