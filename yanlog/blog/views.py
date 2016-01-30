@@ -6,6 +6,7 @@ from django.contrib.auth.views import deprecate_current_app, password_change
 from django.contrib.flatpages.models import FlatPage
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import Count
+from django.http import HttpResponseRedirect
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
@@ -227,11 +228,11 @@ def user_password_change(request,
     Exact same as 'password_change' view but insert a flash message to
     indicate a password change
     """
-    if request.method == 'POST':
-        messages.success(request, "Password updated.")
-
     tpl_response = password_change(request, template_name,
                                    post_change_redirect, password_change_form,
                                    extra_context)
 
+    if (request.method == 'POST' and
+            isinstance(tpl_response, HttpResponseRedirect)):
+        messages.success(request, "Password updated.")
     return tpl_response
