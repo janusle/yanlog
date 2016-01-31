@@ -52,6 +52,6 @@ urlpatterns = [
         views.AboutUpdateView.as_view(),
         name='about_admin'),
     url(r'account/admin/$',
-        views.user_password_change,
+        views.AccountAdminView.as_view(),
         name='account_admin'),
 ]

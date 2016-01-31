@@ -1,5 +1,7 @@
 from django import forms
 from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.views import deprecate_current_app, password_change
@@ -17,7 +19,7 @@ from common.mixin import CommonLoginRequiredMixin
 
 from .models import Post, Setting, Tag
 from .utils import MarkdownTextAreaWidget
-
+from .forms import AccountChangeForm
 
 class IndexView(ListView):
     template_name = "index.html"
@@ -211,6 +213,49 @@ class BlogAdminView(BaseAdminView, UpdateView):
         context = super(BlogAdminView, self).get_context_data(**kwargs)
         context.update({
             'blog_admin': True,  # for setting 'active' in top nav bar
+        })
+        return context
+
+
+class AccountAdminView(BaseAdminView, UpdateView):
+    model = User
+    fields = ['email', 'first_name', 'last_name']
+    template_name = 'management/account.html'
+    success_url = reverse_lazy('blog:account_admin')
+
+    def post(self, request, *args, **kwargs):
+
+        # Check if it's a password change
+        if (request.POST.get('new_password1') or
+                request.POST.get('new_password2')):
+            self.password_form = SetPasswordForm(user=request.user,
+                                                 data=request.POST)
+            self.object = self.get_object()
+            if self.password_form.is_valid():
+                self.password_form.save()
+                update_session_auth_hash(request, request.user)
+                messages.success(request, "Password updated.")
+                return HttpResponseRedirect(self.get_success_url())
+            else:
+                return self.get(request, *args, **kwargs)
+
+        # Add the flash message
+        messages.success(request, "Account updated.")
+        return super(AccountAdminView, self).post(request, *args, **kwargs)
+
+    def get_object(self, queryset=None):
+        self.kwargs[self.pk_url_kwarg] = self.request.user.id
+        return super(AccountAdminView, self).get_object(queryset)
+
+    def get_context_data(self, **kwargs):
+        if hasattr(self, 'password_form'):
+            password_form = self.password_form
+        else:
+            password_form = SetPasswordForm(user=self.request.user.id)
+        context = super(AccountAdminView, self).get_context_data(**kwargs)
+        context.update({
+            'blog_account': True,  # for setting 'active' in top nav bar
+            'password_form': password_form,
         })
         return context
 

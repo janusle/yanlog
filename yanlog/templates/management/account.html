@@ -13,11 +13,18 @@
   {% endfor %}
 {% endif %}
 
-
+<!-- change email, first_name, last_name -->
 <form method="post">
   {% csrf_token %}
   {% bootstrap_form form%}
   {% bootstrap_button content='Save' button_type="submit" button_class="btn btn-success" %}
+</form>
+
+<!-- change password -->
+<form method="post">
+  {% csrf_token %}
+  {% bootstrap_form password_form %}
+  {% bootstrap_button content='Change password' button_type="submit" button_class="btn btn-warning" %}
 </form>
 
 </div>
