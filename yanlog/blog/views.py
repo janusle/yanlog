@@ -223,22 +223,28 @@ class AccountAdminView(BaseAdminView, UpdateView):
     template_name = 'management/account.html'
     success_url = reverse_lazy('blog:account_admin')
 
-    def post(self, request, *args, **kwargs):
-
+    def dispatch(self, request, *args, **kwargs):
         # Check if it's a password change
-        if (request.POST.get('new_password1') or
-                request.POST.get('new_password2')):
-            self.password_form = SetPasswordForm(user=request.user,
-                                                 data=request.POST)
-            self.object = self.get_object()
-            if self.password_form.is_valid():
-                self.password_form.save()
-                update_session_auth_hash(request, request.user)
-                messages.success(request, "Password updated.")
-                return HttpResponseRedirect(self.get_success_url())
-            else:
-                return self.get(request, *args, **kwargs)
+        if (request.method.lower() == 'post' and
+            (request.POST.get('new_password1') or
+                 request.POST.get('new_password2'))):
+            return self.update_password(request, *args, **kwargs)
+        return super(AccountAdminView, self).dispatch(request,
+                                                      *args, **kwargs)
 
+    def update_password(self, request, *args, **kwargs):
+        self.password_form = SetPasswordForm(user=request.user,
+                                             data=request.POST)
+        self.object = self.get_object()
+        if self.password_form.is_valid():
+            self.password_form.save()
+            update_session_auth_hash(request, request.user)
+            messages.success(request, "Password updated.")
+            return HttpResponseRedirect(self.get_success_url())
+        else:
+            return self.get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
         # Add the flash message
         messages.success(request, "Account updated.")
         return super(AccountAdminView, self).post(request, *args, **kwargs)
